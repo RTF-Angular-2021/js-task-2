@@ -13,13 +13,13 @@
 возвращает:
 	true - если добавление прошло успешно
 	false - если запись не создалась или не добавилась в книгу
-@param {Array<{ phone: string, name: string, email?: string }>} phoneBooke - Текущее состояние телефонной книги
-@param {string} phoneNumber Номер телефона
+@param {Array<{ phone: string, name: string, email?: string }>} phoneBook - Текущее состояние телефонной книги
+@param {string} phone Номер телефона
 @param {string} name Имя
 @param {string} email Электронная почта
 @returns {boolean} Результат добавления
  */
-function add(phoneBooke, phoneNumber, name, email) {
+function add(phoneBook, phone, name, email) {
 }
 
 module.exports.add = add;

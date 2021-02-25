@@ -12,13 +12,13 @@
 возвращает:
 	true - если обновление прошло успешно
 	false - если запись не обновилась
-@param {Array<{ phone: string, name: string, email?: string }>} phoneBooke - Текущее состояние телефонной книги
-@param {string} phoneNumber Номер телефона
+@param {Array<{ phone: string, name: string, email?: string }>} phoneBook - Текущее состояние телефонной книги
+@param {string} phone Номер телефона
 @param {string} name Имя
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
-function update(phoneBooke, phoneNumber, name, email) {
+function update(phoneBook, phone, name, email) {
 }
 
 module.exports.update = update;

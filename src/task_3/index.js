@@ -14,11 +14,11 @@
 возвращает:
 	Отсортированный по полю name массив строк в формате name, phone, email
 	Поле phone должно быть отформатировано в виде +7 (999) 111-22-33
-@param {Array<{ phone: string, name: string, email?: string }>} phoneBooke - Текущее состояние телефонной книги
+@param {Array<{ phone: string, name: string, email?: string }>} phoneBook - Текущее состояние телефонной книги
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
-function find(phoneBooke, query) {
+function find(phoneBook, query) {
 }
 
 module.exports.find = find;
