@@ -19,6 +19,23 @@
 @returns {boolean} Результат обновления
  */
 function update(phoneBook, phone, name, email) {
+	phone = parsePhoneNumber(phone);
+	let note = phoneBook.find(note => parsePhoneNumber(note.phone) === phone);
+	if (note === undefined)
+		return false;
+
+	if (name !== "" && name !== undefined && name !== null) 
+		note.name = name;
+	else return false;
+
+	if (email !== undefined && email !== null) note.email = email;
+	
+	return true;
+}
+
+function parsePhoneNumber(phone) {
+	const parts = phone.split("-");
+	return parts.length === 1 ? phone : parts[0] + parts[1] + parts[2] + parts[3] + parts[4];
 }
 
 module.exports.update = update;
