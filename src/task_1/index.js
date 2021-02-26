@@ -27,11 +27,7 @@ function add(phoneBook, phone, name, email) {
 
 	for (let key of phoneBook) {
 		for (let k in key) {
-			if (secondVariant.test(key[k])) {
-				phoneNumbersAlreadyAdded.push(key[k].replace(/-/g, ''));
-			} else {
-      			phoneNumbersAlreadyAdded.push(key[k]);
-      		}
+			phoneNumbersAlreadyAdded.push(key[k].replace(/-/g, ''));
 	  	}
 	}
 
@@ -39,6 +35,7 @@ function add(phoneBook, phone, name, email) {
 		if (item === phone) {
 			flag = true;
 		}
+		
 		if (secondVariant.test(phone)) {
 			if (item === phone.replace(/-/g, '')) {
 				flag = true;

@@ -41,7 +41,7 @@ function update(phoneBook, phone, name, email) {
 		if (flag) {
 		  if (name) {
 			phoneBook[i].name = name;
-			if (email && email !== '') {
+			if (email) {
 				phoneBook[i].email = email;
 			}
 			return true
