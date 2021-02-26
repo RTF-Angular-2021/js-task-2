@@ -1,3 +1,5 @@
+const { find } = require("../task_3");
+
 /** Задача 2 - Функция findAndRemove
 Требуется написать функцию findAndRemove, которая
 принимает: 
@@ -12,7 +14,23 @@
 @param {string} query Строка для поиска
 @returns {number} Количество удаленных записей
  */
+
+function removeElements(phoneBook, newPhoneBook){
+	const count = phoneBook.length - newPhoneBook.length;
+	phoneBook.length = 0;
+	newPhoneBook.forEach((value, index) => phoneBook[index] = value);
+	return count;
+}
+
 function findAndRemove(phoneBook, query) {
+	//return find(phoneBook, query).length читы?
+	if(query === '*')
+		return removeElements(phoneBook, []);	
+	else if(query.match(/[a-z]/gi))
+		return removeElements(phoneBook, phoneBook.filter(({email}) => !email.match(query)));
+	else if(query.match(/\d/g))
+		return removeElements(phoneBook, phoneBook.filter(({phone}) => !phone.match(query.replace(/\D/g,''))));
+	return 0;
 }
 
 module.exports.findAndRemove = findAndRemove;
