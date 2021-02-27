@@ -19,6 +19,33 @@
 @returns {Array<string>} Результаты поиска
  */
 function find(phoneBook, query) {
+	if (query == "") {
+		return []
+	}
+	if (query === "*")
+		return phoneBook.map(note => displayNote(note))
+	
+	const foundNotes = phoneBook.filter(note => parsePhoneNumberDash(note.phone).includes(query) || parsePhoneNumberNoDash(note.phone).includes(query)
+		|| note.name.includes(query) || (note.email != null && note.email.includes(query)))
+
+	return foundNotes.map(note => displayNote(note))
+}
+
+function parsePhoneNumberDash(phone) {
+	return !phone.includes("-") ? `+7-${phone.substr(2,3)}-${phone.substr(5,3)}-${phone.substr(8,2)}-${phone.substr(10,2)}` : phone;
+}
+
+function parsePhoneNumberNoDash(phone) {
+	const parts = phone.split("-");
+	return parts.length === 1 ? phone : parts[0] + parts[1] + parts[2] + parts[3] + parts[4];
+}
+
+function displayParsedPhoneNumber(phone) {
+	return `+7 (${phone.substr(2,3)}) ${phone.substr(5,3)}-${phone.substr(8,2)}-${phone.substr(10,2)}`
+}
+
+function displayNote(note) {
+	return `${note.name} ${displayParsedPhoneNumber(parsePhoneNumberNoDash(note.phone))}${note.email !== undefined ? " " + note.email : ""}`
 }
 
 module.exports.find = find;
