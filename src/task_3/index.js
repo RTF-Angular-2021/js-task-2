@@ -19,6 +19,38 @@
 @returns {Array<string>} Результаты поиска
  */
 function find(phoneBook, query) {
+	let result = [];
+	for (let entry of phoneBook){
+		let email = entry.email? ' ' + entry.email : '';
+		if (query === '*'){
+			let phone = formatNumber(entry.phone, '*');
+			result.push(`${entry.name} ${phone}${email}`);
+		} else {
+			let phonePair = formatNumber(entry.phone, 'f');
+			let strEntryF1 = `${entry.name} ${phonePair[0]}${email}`;
+			let strEntryF2 = `${entry.name} ${phonePair[1]}${email}`;
+			if (strEntryF1.includes(query) || strEntryF2.includes(query)){
+				let phone = formatNumber(entry.phone, '*');
+				result.push(`${entry.name} ${phone}${email}`);
+			}
+		}
+	}
+	return result.sort();
+}
+
+function formatNumber(phone, key){
+	let arr = phone.split('');
+	if (key === "*"){
+		let result = `+${arr[0]} (${arr[1] + arr[2] + arr[3]})`; 
+		result += ` ${arr[4] + arr[5] + arr[6]}-${arr[7] + arr[8]}-${arr[9] + arr[10]}`;
+		return result;
+	} else {
+		let phoneF1 = `+${arr[0]}-${arr[1] + arr[2] + arr[3]}-`;
+		phoneF1 += `${arr[4] + arr[5] + arr[6]}-${arr[7] + arr[8]}-${arr[9] + arr[10]}`;
+		let phoneF2 = `+${phone}`;
+		return [phoneF1, phoneF2];
+	}
 }
 
 module.exports.find = find;
+module.exports.formatNumber = formatNumber;

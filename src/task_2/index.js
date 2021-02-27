@@ -18,7 +18,23 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
+const { isPhoneCorrect } = require('../../src/task_1/index');
+
 function update(phoneBook, phone, name, email) {
+	if (name !== '' && name !== undefined){
+		if (isPhoneCorrect(phone)){
+			phone = phone.match(/\d/g).join('');
+			
+			for (let entry of phoneBook){
+				if (entry.phone === phone){
+					entry.name = name;
+					entry.email = email;
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }
 
 module.exports.update = update;
