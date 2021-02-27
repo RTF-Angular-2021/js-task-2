@@ -27,23 +27,15 @@ function find(phoneBook, query) {
 	const number = /[0-9]/;
 
 	for (let i = 0; i < phoneBook.length; i++) {
-		if (phoneBook[i].email) {
-			if (firstVariant.test(phoneBook[i].phone) || secondVariant.test(phoneBook[i].phone)) {
-				num = phoneBook[i].phone.replace(/-/g, '').split('');
-				for (let i = 0; i < num.length; i++) {
-					newStr = `+7 (${num.slice(2,5)}) ${num.slice(5,8)}-${num.slice(8,10)}-${num.slice(10,12)}`.replace(/,/g, '');
-				}
+		if (firstVariant.test(phoneBook[i].phone) || secondVariant.test(phoneBook[i].phone)) {
+			num = phoneBook[i].phone.replace(/-/g, '').split('');
+			for (let i = 0; i < num.length; i++) {
+				newStr = `+7 (${num.slice(2,5)}) ${num.slice(5,8)}-${num.slice(8,10)}-${num.slice(10,12)}`.replace(/,/g, '');
+			}
+			if (phoneBook[i].email) {
 				total.push([phoneBook[i].name, newStr, phoneBook[i].email]);
-			}
-		} else {
-			if (firstVariant.test(phoneBook[i].phone) || secondVariant.test(phoneBook[i].phone)) {
-				num = phoneBook[i].phone.replace(/-/g, '').split('');
-				for (let i = 0; i < num.length; i++) {
-					newStr = `+7 (${num.slice(2,5)}) ${num.slice(5,8)}-${num.slice(8,10)}-${num.slice(10,12)}`.replace(/,/g, '');
-				}
-				total.push([phoneBook[i].name, newStr]);
-			}
-		}
+			} else total.push([phoneBook[i].name, newStr]);
+		}		
 		total.sort();
 	}
 
