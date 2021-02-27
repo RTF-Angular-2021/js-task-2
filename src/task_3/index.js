@@ -26,7 +26,13 @@ function find(phoneBook, query) {
 		return phoneBook.map(note => displayNote(note))
 	
 	const foundNotes = phoneBook.filter(note => parsePhoneNumberDash(note.phone).includes(query) || parsePhoneNumberNoDash(note.phone).includes(query)
-		|| note.name.includes(query) || (note.email != null && note.email.includes(query)))
+		|| note.name.includes(query) || (note.email != null && note.email.includes(query)));
+	
+	foundNotes.sort(function (note1, note2) {
+		if (note1.name === note2.name) return 0;
+		if (note1.name >= note2.name) return 1;
+		if (note1.name <= note2.name) return -1;
+	})
 
 	return foundNotes.map(note => displayNote(note))
 }
