@@ -21,37 +21,20 @@
 function update(phoneBook, phone, name, email) {
 	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/;
 	const secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/;
-	let flag = false; //не нашлось записи в телефонной книге
+
+	const check = phoneBook.filter(item => 
+		(item.phone.replace(/-/g,'') === phone.replace(/-/g,'') 
+		|| item.phone === phone) 
+		&& (firstVariant.test(phone) || secondVariant.test(phone)));
 	
-	for (let key of phoneBook) {
-		for (let k in key) {
-			if (firstVariant.test(phone) && firstVariant.test(key[k]) && phone === key[k]) {
-				flag = true; //запись нашлась
-			} else if (secondVariant.test(phone) && secondVariant.test(key[k]) && phone === key[k]) {
-				flag = true;
-			} else if (secondVariant.test(phone) && firstVariant.test(key[k]) && phone.replace(/-/g, '') === key[k]) {
-				flag = true;
-			} else if (firstVariant.test(phone) && secondVariant.test(key[k]) && phone === key[k].replace(/-/g, '')) {
-				flag = true;
-			}
-	  	}
-	}
 
 	for (let i = 0; i < phoneBook.length; i++) {
-		if (flag) {
-		  if (name) {
+		if (check.length > 0 && name) {
 			phoneBook[i].name = name;
-			if (email) {
-				phoneBook[i].email = email;
-			}
-			return true
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
-	}
+			if (email) phoneBook[i].email = email;
+			return true;
+		} else return false;
+	}			
 }
 
 module.exports.update = update;

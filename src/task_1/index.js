@@ -22,41 +22,11 @@
 function add(phoneBook, phone, name, email) {
 	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/;
 	const secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/;
-	let phoneNumbersAlreadyAdded = [];
-	let flag = false;
-
-	for (let key of phoneBook) {
-		for (let k in key) {
-			phoneNumbersAlreadyAdded.push(key[k].replace(/-/g, ''));
-	  	}
-	}
-
-	phoneNumbersAlreadyAdded.forEach(item => {
-		if (item === phone) {
-			flag = true;
-		}
-		
-		if (secondVariant.test(phone)) {
-			if (item === phone.replace(/-/g, '')) {
-				flag = true;
-			}
-		}
-	});
   
-
-	if (firstVariant.test(phone) && name && !flag) {
-		if (email) {
-			phoneBook.push({'phone':phone, 'name':name, 'email': email});
-		} else {
-			phoneBook.push({'phone':phone, 'name':name});
-		}
-		return true;
-	} else if (secondVariant.test(phone) && name && !flag) {
-		if (email) {
-			phoneBook.push({'phone':phone, 'name':name, 'email': email});
-		} else {
-			phoneBook.push({'phone':phone, 'name':name});
-		}
+  	const check = phoneBook.filter(item => item.phone.replace(/-/g, '') === phone.replace(/-/g, '') || item.phone === phone);
+	
+  	if (name && (check.length === 0) && (firstVariant.test(phone) || secondVariant.test(phone))) {
+		email ? phoneBook.push({'phone':phone, 'name':name, 'email': email}) : phoneBook.push({'phone':phone, 'name':name});
 		return true;
 	} else {
 		return false;
