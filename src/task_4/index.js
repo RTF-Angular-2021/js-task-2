@@ -13,31 +13,23 @@
 @returns {number} Количество удаленных записей
  */
 function findAndRemove(phoneBook, query) {
-	let count, array = [], newArray = [];
+	let count = phoneBook.length;
+	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/;
+	const secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/;
 	const email = /[a-z]/;
 	const number = /[0-9]/;
 
-	for (let i = 0; i < phoneBook.length; i++) {
-		if (phoneBook[i].email) {
-			array.push([phoneBook[i].phone.replace(/-/g, ''), phoneBook[i].name, phoneBook[i].email]);
-		} else {
-			array.push([phoneBook[i].phone.replace(/-/g, ''), phoneBook[i].name]);
-		}
-	}
-
 	if (query === '*') {
-		count = array.length;
+		let result = phoneBook.filter(item => 0);
+		count -= result.length;
 		return count;
-	} else if (email.test(query) || number.test(query)) {
-		query.replace(/-/g, '');
-		for (let i = 0; i < array.length; i++) {
-			for (let j = 0; j < array[i].length; j++) {
-				if(array[i][j].includes(query)) {
-					newArray.push([array[i]]);
-				}
-			}
-		}
-		count = array.length - newArray.length;
+	} else if (number.test(query) || firstVariant.test(query) || secondVariant.test(query)) {
+		let result = phoneBook.filter(item => item.phone.includes(query.replace(/-/g,'')) || item.phone.includes(query));
+		count = result.length;
+		return count;
+	} else if (email.test(query)) {
+		let result = phoneBook.filter(item => item.email && item.email.includes(query));
+		count = result.length;
 		return count;
 	}
 }
