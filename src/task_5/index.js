@@ -12,6 +12,11 @@
 @returns {number} Количество добавленных и обновленных записей
  */
 function importFromCsv(phoneBook, csv) {
+	csv.sp
+}
+
+function getRawNotesFromCsv(csv) {
+	const lines = csv.split('\n')
 }
 
 module.exports.importFromCsv = importFromCsv;
