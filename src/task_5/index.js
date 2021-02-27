@@ -16,7 +16,9 @@ const { add } = require('../../src/task_1/index');
 const { update } = require('../../src/task_2/index');
 
 function importFromCsv(phoneBook, csv) {
-	let count = 0, arr = csv.split('\n'), newArr = [];
+	let count = 0, 
+		arr = csv.split('\n'), 
+		newArr = [];
   
 	for (let i = 0; i < arr.length; i++) {
 		newArr.push(arr[i].split(';'));
@@ -25,9 +27,9 @@ function importFromCsv(phoneBook, csv) {
 	for (let j = 0; j < newArr.length; j++) {
 		for (let k = 0; k < newArr[j].length; k++) {
 			if (!isNaN(newArr[j][0])) {
-				let phone = newArr[j][0];
-				let name = newArr[j][1];
-				let email = newArr[j][2];
+				let phone = newArr[j][0],
+				    name = newArr[j][1],
+					email = newArr[j][2];
 				if (add(phoneBook, phone, name, email) || update(phoneBook, phone, name, email)) {
 					count++;
 				}

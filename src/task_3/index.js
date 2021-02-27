@@ -20,11 +20,11 @@
  */
 function find(phoneBook, query) {
 	let total = [], result = [];
-	let newStr, num
-	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/;
-	const secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/;
-	const email = /[a-z]/;
-	const number = /[0-9]/;
+	let newStr, num; 
+	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/, 
+		  secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/,
+		  email = /[a-z]/,
+		  number = /[0-9]/;
 
 	for (let i = 0; i < phoneBook.length; i++) {
 		if (firstVariant.test(phoneBook[i].phone) || secondVariant.test(phoneBook[i].phone)) {
@@ -48,7 +48,7 @@ function find(phoneBook, query) {
 		for (let j = 0; j < total.length; j++) {
 			result.push(total[j].join(' ')); 
 		}
-		let some = result.filter(element => element.includes(query));
+		const some = result.filter(element => element.includes(query));
 		return some;
 	}
 }

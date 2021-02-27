@@ -19,8 +19,8 @@
 @returns {boolean} Результат обновления
  */
 function update(phoneBook, phone, name, email) {
-	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/;
-	const secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/;
+	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/,
+		  secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/;
 
 	const check = phoneBook.filter(item => 
 		(item.phone.replace(/-/g,'') === phone.replace(/-/g,'') 

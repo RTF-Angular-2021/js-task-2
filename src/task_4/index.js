@@ -14,21 +14,21 @@
  */
 function findAndRemove(phoneBook, query) {
 	let count = phoneBook.length;
-	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/;
-	const secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/;
-	const email = /[a-z]/;
-	const number = /[0-9]/;
+	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/, 
+		  secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/,
+		  email = /[a-z]/,
+		  number = /[0-9]/;
 
 	if (query === '*') {
-		let result = phoneBook.filter(item => 0);
+		const result = phoneBook.filter(item => 0);
 		count -= result.length;
 		return count;
 	} else if (number.test(query) || firstVariant.test(query) || secondVariant.test(query)) {
-		let result = phoneBook.filter(item => item.phone.includes(query.replace(/-/g,'')) || item.phone.includes(query));
+		const result = phoneBook.filter(item => item.phone.includes(query.replace(/-/g,'')) || item.phone.includes(query));
 		count = result.length;
 		return count;
 	} else if (email.test(query)) {
-		let result = phoneBook.filter(item => item.email && item.email.includes(query));
+		const result = phoneBook.filter(item => item.email && item.email.includes(query));
 		count = result.length;
 		return count;
 	}
