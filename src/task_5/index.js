@@ -18,12 +18,12 @@ const { update } = require('../../src/task_2/index');
 function importFromCsv(phoneBook, csv) {
 	let completeCmdNum = 0;
 	let cmdArray = csv.split('\n');
-	for (let cmd of cmdArray){
-		let args = cmd.split(';');
+	for (const cmd of cmdArray){
+		const args = cmd.split(';');
 		if (args.length < 4 && args.length > 1 && isPhoneCorrect(args[0])){
-			let phone = args[0];
-			let name = args[1];
-			let email = args.length === 3? args[2] : '';
+			const phone = args[0];
+			const name = args[1];
+			const email = args.length === 3? args[2] : '';
 			if (add(phoneBook, phone, name, email) || update(phoneBook, phone, name, email)){
 				completeCmdNum++;
 			}

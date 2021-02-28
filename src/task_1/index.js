@@ -20,12 +20,12 @@
 @returns {boolean} Результат добавления
  */
 function add(phoneBook, phone, name, email) {
-	if (name !== '' && name !== undefined && isPhoneCorrect(phone)){
+	if (Boolean(name) && isPhoneCorrect(phone)){
 		phone = phone.match(/\d/g).join('');
-		let searchEntry = {
-			phone: phone,
-			name: name,
-			email: email
+		const searchEntry = {
+			phone,
+			name,
+			email
 		};
 
 		if (!isInPhoneBook(phoneBook, phone)){
@@ -37,7 +37,7 @@ function add(phoneBook, phone, name, email) {
 }
 
 function isInPhoneBook(phoneBook, searchPhone){
-	for (let entry of phoneBook){
+	for (const entry of phoneBook){
 		if (entry.phone === searchPhone){
 			return true;
 		}
@@ -46,8 +46,8 @@ function isInPhoneBook(phoneBook, searchPhone){
 }
 
 function isPhoneCorrect(phone){
-	let regex = /^\+7-\d\d\d-\d\d\d-\d\d-\d\d$/; 
-	let regex1 = /^\+7\d\d\d\d\d\d\d\d\d\d$/;
+	const regex = /^\+7-\d{3}-\d{3}-\d{2}-\d{2}$/; 
+	const regex1 = /^\+7\d{10}$/;
 	return regex.test(phone) || regex1.test(phone);
 }
 

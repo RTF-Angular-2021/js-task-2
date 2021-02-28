@@ -21,11 +21,11 @@ function findAndRemove(phoneBook, query) {
 		phoneBook.splice(0, deleteNum);
 	} else {
 		for (let i = 0; i < phoneBook.length; i++){
-			let entry = phoneBook[i];
-			let email = entry.email? ' ' + entry.email : '';
-			let phonePair = formatNumber(entry.phone, 'f');
-			let strEntryF1 = `${entry.name} ${phonePair[0]}${email}`;
-			let strEntryF2 = `${entry.name} ${phonePair[1]}${email}`;
+			const entry = phoneBook[i];
+			const email = entry.email? ' ' + entry.email : '';
+			const phonePair = formatNumber(entry.phone, 'f');
+			const strEntryF1 = `${entry.name} ${phonePair[0]}${email}`;
+			const strEntryF2 = `${entry.name} ${phonePair[1]}${email}`;
 			if (strEntryF1.includes(query) || strEntryF2.includes(query)){
 				phoneBook.splice(i, 1);
 				deleteNum++;

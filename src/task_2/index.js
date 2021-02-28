@@ -25,7 +25,7 @@ function update(phoneBook, phone, name, email) {
 		if (isPhoneCorrect(phone)){
 			phone = phone.match(/\d/g).join('');
 			
-			for (let entry of phoneBook){
+			for (const entry of phoneBook){
 				if (entry.phone === phone){
 					entry.name = name;
 					entry.email = email;

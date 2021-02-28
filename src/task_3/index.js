@@ -19,18 +19,18 @@
 @returns {Array<string>} Результаты поиска
  */
 function find(phoneBook, query) {
-	let result = [];
-	for (let entry of phoneBook){
-		let email = entry.email? ' ' + entry.email : '';
+	const result = [];
+	for (const entry of phoneBook){
+		const email = entry.email? ' ' + entry.email : '';
 		if (query === '*'){
-			let phone = formatNumber(entry.phone, '*');
+			const phone = formatNumber(entry.phone, '*');
 			result.push(`${entry.name} ${phone}${email}`);
 		} else {
-			let phonePair = formatNumber(entry.phone, 'f');
-			let strEntryF1 = `${entry.name} ${phonePair[0]}${email}`;
-			let strEntryF2 = `${entry.name} ${phonePair[1]}${email}`;
+			const phonePair = formatNumber(entry.phone, 'f');
+			const strEntryF1 = `${entry.name} ${phonePair[0]}${email}`;
+			const strEntryF2 = `${entry.name} ${phonePair[1]}${email}`;
 			if (strEntryF1.includes(query) || strEntryF2.includes(query)){
-				let phone = formatNumber(entry.phone, '*');
+				const phone = formatNumber(entry.phone, '*');
 				result.push(`${entry.name} ${phone}${email}`);
 			}
 		}
@@ -39,14 +39,14 @@ function find(phoneBook, query) {
 }
 
 function formatNumber(phone, key){
-	let arr = phone.split('');
+	const arr = phone.split('');
 	if (key === "*"){
-		let result = `+${arr[0]} (${arr[1] + arr[2] + arr[3]})`; 
-		result += ` ${arr[4] + arr[5] + arr[6]}-${arr[7] + arr[8]}-${arr[9] + arr[10]}`;
+		let result = `+${arr[0]} (${arr.slice(1, 4).join('')})`; 
+		result += ` ${arr.slice(4, 7).join('')}-${arr[7] + arr[8]}-${arr[9] + arr[10]}`;
 		return result;
 	} else {
-		let phoneF1 = `+${arr[0]}-${arr[1] + arr[2] + arr[3]}-`;
-		phoneF1 += `${arr[4] + arr[5] + arr[6]}-${arr[7] + arr[8]}-${arr[9] + arr[10]}`;
+		let phoneF1 = `+${arr[0]}-${arr.slice(1, 4).join('')}-`;
+		phoneF1 += `${arr.slice(4, 7).join('')}-${arr[7] + arr[8]}-${arr[9] + arr[10]}`;
 		let phoneF2 = `+${phone}`;
 		return [phoneF1, phoneF2];
 	}
