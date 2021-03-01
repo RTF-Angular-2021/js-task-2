@@ -18,24 +18,27 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
+
+const { parsePhoneNumberNoDash } = require('../../src/utils/index');
+
+
 function update(phoneBook, phone, name, email) {
-	phone = parsePhoneNumber(phone);
-	let note = phoneBook.find(note => parsePhoneNumber(note.phone) === phone);
-	if (note === undefined)
+	phone = parsePhoneNumberNoDash(phone);
+	const note = phoneBook.find(note => parsePhoneNumberNoDash(note.phone) === phone);
+	
+	if (!note) {
 		return false;
+	}
 
-	if (name !== "" && name !== undefined && name !== null) 
+	if (name) {
 		note.name = name;
-	else return false;
+	}
+	else { return false; }
 
-	if (email !== undefined && email !== null) note.email = email;
+	if (email) { note.email = email; }
 	
 	return true;
 }
 
-function parsePhoneNumber(phone) {
-	const parts = phone.split("-");
-	return parts.length === 1 ? phone : parts[0] + parts[1] + parts[2] + parts[3] + parts[4];
-}
 
 module.exports.update = update;

@@ -11,14 +11,21 @@
 @param {string} csv Csv строка, описывающая таблицу, формата name;phone;email
 @returns {number} Количество добавленных и обновленных записей
  */
+
+const { parsePhoneNumberNoDash } = require('../../src/utils/index');
+ 
+const DASHES_PHONE_REGEX = /^[+]7-\d{3}-\d{3}-\d{2}-\d{2}$/;
+const NO_DASHES_PHONE_REGEX = /^[+]7\d{10}$/;
+
+
 function importFromCsv(phoneBook, csv) {
 	let modifiedNotes = 0;
 	const notes = getNotesFromCsv(csv);
 
 	for (const note of notes) {
-		if (tryUpdateNote(phoneBook, note)) 
+		if (tryUpdateNote(phoneBook, note)) {
 			modifiedNotes++;
-		else {
+		} else {
 			phoneBook.push(note);
 			modifiedNotes++;
 		}
@@ -35,8 +42,7 @@ function getNotesFromCsv(csv) {
 }
 
 function isPhoneNumber(phone) {
-	return (phone.length === 16 && phone.match(/[+]7-\d{3}-\d{3}-\d{2}-\d{2}/) !== null)
-		|| (phone.length === 12 && phone.match(/[+]7\d{10}/) !== null)
+	return phone.match(DASHES_PHONE_REGEX) !== null || phone.match(NO_DASHES_PHONE_REGEX) !== null
 }
 
 function areSamePhoneNumbers(phone1, phone2) {
@@ -52,9 +58,5 @@ function tryUpdateNote(phoneBook, note) {
 	return false;
 }
 
-function parsePhoneNumberNoDash(phone) {
-	const parts = phone.split("-");
-	return parts.length === 1 ? phone : parts[0] + parts[1] + parts[2] + parts[3] + parts[4];
-}
 
 module.exports.importFromCsv = importFromCsv;
