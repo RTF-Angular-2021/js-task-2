@@ -12,6 +12,7 @@
 @param {string} query Строка для поиска
 @returns {number} Количество удаленных записей
  */
+const { find } = require('../../src/task_3/index');
 const { formatNumber } = require('../../src/task_3/index');
 
 function findAndRemove(phoneBook, query) {
@@ -22,11 +23,7 @@ function findAndRemove(phoneBook, query) {
 	} else {
 		for (let i = 0; i < phoneBook.length; i++){
 			const entry = phoneBook[i];
-			const email = entry.email? ' ' + entry.email : '';
-			const phonePair = formatNumber(entry.phone, 'f');
-			const strEntryF1 = `${entry.name} ${phonePair[0]}${email}`;
-			const strEntryF2 = `${entry.name} ${phonePair[1]}${email}`;
-			if (strEntryF1.includes(query) || strEntryF2.includes(query)){
+			if (find([entry], query).length > 0){
 				phoneBook.splice(i, 1);
 				deleteNum++;
 				i--;

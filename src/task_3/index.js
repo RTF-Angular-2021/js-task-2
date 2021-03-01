@@ -26,10 +26,9 @@ function find(phoneBook, query) {
 			const phone = formatNumber(entry.phone, '*');
 			result.push(`${entry.name} ${phone}${email}`);
 		} else {
-			const phonePair = formatNumber(entry.phone, 'f');
-			const strEntryF1 = `${entry.name} ${phonePair[0]}${email}`;
-			const strEntryF2 = `${entry.name} ${phonePair[1]}${email}`;
-			if (strEntryF1.includes(query) || strEntryF2.includes(query)){
+			const formatPhonePair = formatNumber(entry.phone, 'f'); //форматирую номера из книги в двух варинтах, чтобы не пришлось форматировать query
+			const predict = formatPhonePair.some((p) => p.includes(query));
+			if (entry.name.includes(query) || entry.email.includes(query) || predict){
 				const phone = formatNumber(entry.phone, '*');
 				result.push(`${entry.name} ${phone}${email}`);
 			}

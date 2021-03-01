@@ -20,7 +20,7 @@ function importFromCsv(phoneBook, csv) {
 	let cmdArray = csv.split('\n');
 	for (const cmd of cmdArray){
 		const args = cmd.split(';');
-		if (args.length < 4 && args.length > 1 && isPhoneCorrect(args[0])){
+		if (args.length === 3 && isPhoneCorrect(args[0])){
 			const phone = args[0];
 			const name = args[1];
 			const email = args.length === 3? args[2] : '';

@@ -20,12 +20,12 @@
 @returns {boolean} Результат добавления
  */
 function add(phoneBook, phone, name, email) {
-	if (Boolean(name) && isPhoneCorrect(phone)){
+	if (name && isPhoneCorrect(phone)){
 		phone = phone.match(/\d/g).join('');
 		const searchEntry = {
 			phone,
 			name,
-			email
+			email: email ? email : ''
 		};
 
 		if (!isInPhoneBook(phoneBook, phone)){
