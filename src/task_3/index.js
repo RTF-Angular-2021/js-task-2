@@ -20,18 +20,21 @@
  */
 
 const getRes = arr => arr.map(({phone, name, email}) => {
-	let correctPhone = `+7 (${phone.slice(1, 4)}) ${phone.slice(4, 7)}-${phone.slice(7, 9)}-${phone.slice(9, 11)}`;
+	const correctPhone = `+7 (${phone.slice(1, 4)}) ${phone.slice(4, 7)}-${phone.slice(7, 9)}-${phone.slice(9, 11)}`;
 	return email ? `${name} ${correctPhone} ${email}` : `${name} ${correctPhone}`;
 });
 
 function find(phoneBook, query) {
 	if(query === '*')
 		return getRes(phoneBook)
-	else if(query.match(/[a-z]/gi))
-		return getRes(phoneBook.filter(({email}) => email.match(query)));
-	else if(query.match(/\d/g))
-		return getRes(phoneBook.filter(({phone}) => phone.match(query.replace(/\D/g,''))));
+	else if(query)
+		return getRes(phoneBook.filter(({phone, email}) => {
+			const req = query.replace(/[+()-]/g,'');
+			return  email.match(req) || phone.match(req)
+		}));
 	else return [];
 }
+
+
 
 module.exports.find = find;

@@ -19,16 +19,12 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат добавления
  */
-
-const getCorrectPhone = phone => 
-	!phone.match(/\+7\-\d{3}\-\d{3}\-\d{2}-\d{2}/g) && !phone.match(/\+7\d{10}/g) || phone.match(/[a-z]/gi) 
-		? null
-		: phone.replace(/\D/g,'');
+const {getCorrectPhone} = require('../utils.js');
 
 function add(phoneBook, phone, name, email) {
-	let correctPhone = getCorrectPhone(phone);
+	const correctPhone = getCorrectPhone(phone);
 	if(!correctPhone || !name || phoneBook.find(value => value.phone === correctPhone)) return false;
-	phoneBook.push({phone: correctPhone, name: name, email: email || ''})
+	phoneBook.push({phone: correctPhone, name, email: email || ''})
 	return true;
 }
 

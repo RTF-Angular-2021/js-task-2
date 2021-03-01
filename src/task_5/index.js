@@ -16,19 +16,17 @@ const { find } = require("../task_3");
 @returns {number} Количество добавленных и обновленных записей
  */
 function importFromCsv(phoneBook, csv) {
-	let phones = [];
+	let count = 0;
 	csv.split('\n').forEach(value => {
 		let user = value.split(';');
-		if(user.length != 3) return;
-		let phone = user[0];
-		let name = user[1];
-		let email = user[2];
-		if (!phones.find(x => x === phone)) phones.push(phone);
+		const phone = user[0];
+		const name = user[1];
+		const email = user[2];
 		find(phoneBook, phone).length > 0 
-			? update(phoneBook, phone, name, email) 
-			: add(phoneBook, phone, name, email);
-	})
-	return phones.length;
+			? update(phoneBook, phone, name, email) ? count++ : '' 
+			: add(phoneBook, phone, name, email) ? count++ : '' ;
+	});
+	return count;
 }
 
 module.exports.importFromCsv = importFromCsv;

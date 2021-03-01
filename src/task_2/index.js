@@ -19,13 +19,10 @@
 @returns {boolean} Результат обновления
  */
 
-const getCorrectPhone = phone => 
-	!phone.match(/\+7\-\d{3}\-\d{3}\-\d{2}-\d{2}/g) && !phone.match(/\+7\d{10}/g) || phone.match(/[a-z]/gi) 
-		? null
-		: phone.replace(/\D/g,'');
+const {getCorrectPhone} = require('../utils.js');
 
 function update(phoneBook, phone, name, email) {
-	let correctPhone = getCorrectPhone(phone);
+	const correctPhone = getCorrectPhone(phone);
 	if(!correctPhone || !name || phoneBook.filter(value => value.phone === correctPhone).length === 0) return false;
 	phoneBook.forEach(value => {
 		if(value.phone === correctPhone){

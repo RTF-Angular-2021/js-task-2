@@ -23,13 +23,13 @@ function removeElements(phoneBook, newPhoneBook){
 }
 
 function findAndRemove(phoneBook, query) {
-	//return find(phoneBook, query).length читы?
 	if(query === '*')
 		return removeElements(phoneBook, []);	
-	else if(query.match(/[a-z]/gi))
-		return removeElements(phoneBook, phoneBook.filter(({email}) => !email.match(query)));
-	else if(query.match(/\d/g))
-		return removeElements(phoneBook, phoneBook.filter(({phone}) => !phone.match(query.replace(/\D/g,''))));
+	else if(query)
+		return removeElements(phoneBook, phoneBook.filter(({phone, email}) => {
+			const req = query.replace(/[+()-]/g,''); 
+			return !email.match(req) && !phone.match(req);
+		}));
 	return 0;
 }
 
