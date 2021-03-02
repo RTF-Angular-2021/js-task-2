@@ -31,7 +31,11 @@ function update(phoneBook, phone, name, email) {
 	for (let i = 0; i < phoneBook.length; i++) {
 		if (check.length > 0 && name) {
 			phoneBook[i].name = name;
-			if (email) phoneBook[i].email = email;
+			if (email) {
+				phoneBook[i].email = email;
+			} else if (phoneBook[i].email && !email) {
+				delete phoneBook[i].email;
+			}
 			return true;
 		} else return false;
 	}			

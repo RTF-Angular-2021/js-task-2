@@ -17,6 +17,7 @@ function findAndRemove(phoneBook, query) {
 	const firstVariant = /\+7\d{3}\d{3}\d{2}\d{2}/, 
 		  secondVariant = /\+7-\d{3}-\d{3}-\d{2}-\d{2}/,
 		  email = /[a-z]/,
+		  name = /^[a-zA-Zа-яёА-ЯЁ]+$/,
 		  number = /[0-9]/;
 
 	if (query === '*') {
@@ -27,8 +28,10 @@ function findAndRemove(phoneBook, query) {
 		const result = phoneBook.filter(item => item.phone.includes(query.replace(/-/g,'')) || item.phone.includes(query));
 		count = result.length;
 		return count;
-	} else if (email.test(query)) {
-		const result = phoneBook.filter(item => item.email && item.email.includes(query));
+	} else if (email.test(query) || name.test(query)) {
+		const result = phoneBook.filter(item => 
+			(item.email && item.email.includes(query)) 
+			|| (item.name && item.name.includes(query)));
 		count = result.length;
 		return count;
 	}

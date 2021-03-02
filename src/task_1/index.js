@@ -26,7 +26,7 @@ function add(phoneBook, phone, name, email) {
   	const check = phoneBook.filter(item => item.phone.replace(/-/g, '') === phone.replace(/-/g, '') || item.phone === phone);
 	
   	if (name && (check.length === 0) && (firstVariant.test(phone) || secondVariant.test(phone))) {
-		email ? phoneBook.push({'phone':phone, 'name':name, 'email': email}) : phoneBook.push({'phone':phone, 'name':name});
+		email ? phoneBook.push({phone, name, email}) : phoneBook.push({phone, name});
 		return true;
 	} else {
 		return false;
