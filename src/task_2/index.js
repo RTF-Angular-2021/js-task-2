@@ -1,3 +1,5 @@
+const { getCorrectPhone } = require('../../src/utils');
+
 /** Задача 2 - Функция update
 Требуется написать функцию update, которая
 принимает: 
@@ -35,16 +37,6 @@ function update(phoneBook, phone, name, email) {
 	}
 
 	return false;
-}
-
-function getCorrectPhone(phone) {
-	if (phone.match(/\+\d-\d{3}-\d{3}-\d{2}-\d{2}/) !== null) {
-		return phone.replace(/-/g, '');
-	} else if (phone.match(/\+\d{11}/) !== null) {
-		return phone;
-	} else {
-		return null;
-	}
 }
 
 

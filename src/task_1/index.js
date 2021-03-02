@@ -1,3 +1,5 @@
+const { getCorrectPhone } = require('../../src/utils');
+
 /** Задача 1 - Функция add
 Требуется написать функцию add, которая
 принимает: 
@@ -23,29 +25,19 @@
 function add(phoneBook, phone, name, email) {
 	const correctPhone = getCorrectPhone(phone);
 
-	if (name === undefined || name === '' || correctPhone === null) {
+	if (!name || correctPhone === null) {
 		return false;
 	}
 
 	for (let element of phoneBook) {
-		if (element !== undefined && (element.phone === correctPhone || element.email === email)) {
+		if (element !== undefined && element.phone === correctPhone) {
 			return false;
 		}
 	}
 
-	phoneBook.push({ phone: correctPhone, name: name, email: email });
+	phoneBook.push({ phone: correctPhone, name, email });
 
 	return true;
-}
-
-function getCorrectPhone(phone) {
-	if (phone.match(/\+\d-\d{3}-\d{3}-\d{2}-\d{2}/) !== null) {
-		return phone.replace(/-/g, '');
-	} else if (phone.match(/\+\d{11}/) !== null) {
-		return phone;
-	} else {
-		return null;
-	}
 }
 
 
