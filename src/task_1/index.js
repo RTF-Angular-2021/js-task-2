@@ -22,7 +22,7 @@
 function add(phoneBook, phone, name, email) 
 {
 	const correctphone = CorrectPhone(phone);
-	const search = {phone: phone, name: name, email: email};	
+	search = {phone: phone, name: name, email: email};	
 
 	if (!name || correctphone === null)
 	{
@@ -44,11 +44,11 @@ function CorrectPhone(phone)
 	{
 		const firstPhone = /\+7\d{10}/;
 		const secondPhone = /\+7\-\d{3}\-\d{3}\-\d{2}\-d{2}/;
-		if (firstPhone !== null)
+		if (phone.match(firstPhone) !== null)
 		{
 			return phone;
 		}
-		if (secondPhone !== null)
+		if (phone.match(secondPhone) !== null)
 		{
 			return phone.replace(/-/g, '');
 		}

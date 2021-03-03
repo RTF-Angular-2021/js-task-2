@@ -21,8 +21,15 @@
 function CorrectPhone(phone)
 {
 	const firstPhone = /\+7\d{10}/;
-	const secondPhone = /\+7\-\d{3}\-\d{3}\-\d{2}\-d{2}/;
-	return firstPhone.test(phone) || secondPhone.test(phone);
+		const secondPhone = /\+7\-\d{3}\-\d{3}\-\d{2}\-d{2}/;
+		if (phone.match(firstPhone) !== null)
+		{
+			return phone;
+		}
+		if (phone.match(secondPhone) !== null)
+		{
+			return phone.replace(/-/g, '');
+		}
 }
 function update(phoneBook, phone, name, email) 
 {
