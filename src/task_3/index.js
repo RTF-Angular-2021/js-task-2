@@ -18,7 +18,55 @@
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
-function find(phoneBook, query) {
+
+function find(phoneBook, query) 
+{
+	let result=[];
+	let firstBufer;
+	let secondBufer;
+	let array;
+
+	if (query ==='')
+		return query;
+
+    for (const check of phoneBook)
+	{
+		if (query === '*')			
+		{
+        	secondBufer = check.phone.replace(/\D/g,'');
+        	array = secondBufer.split('');
+        	check.phone =`+${array[0]} (${array[1]+array[2]+array[3]}) ${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
+        	if (check.email !== undefined)
+			{
+				result.push(check.name+' '+check.phone+' '+check.email);
+			}
+			else
+			{
+				result.push(check.name+' '+check.phone);
+			}
+    	}
+		else
+		{ 
+    		secondBufer = check.phone.replace(/\D/g,'');
+    		array = secondBufer.split('');
+    		firstBufer = array.join('');
+    		secondBufer = `+${array[0]}-${array[1]+array[2]+array[3]}-${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
+    		if (firstBufer.includes(query)||secondBufer.includes(query)||(check.email !== undefined && check.email.includes(query))||check.name.includes(query))          
+    		{
+        		check.phone =`+${array[0]} (${array[1]+array[2]+array[3]}) ${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
+        		if (check.email !== undefined)
+				{
+					result.push(check.name+' '+check.phone+' '+check.email);
+				}
+				else
+				{
+					result.push(check.name+' '+check.phone);
+				}
+    		}	
+		}
+	}
+	
+	return result.sort();			
 }
 
 module.exports.find = find;
