@@ -21,36 +21,42 @@
  */
 function add(phoneBook, phone, name, email) 
 {
-	const correctphone = CorrectPhone(phone);
-	search = {phone: correctphone, name: name, email: email};	
+	const correctPhone = CorrectPhone(phone);
 
-	if (!name || correctphone === null)
+	if (!name || correctPhone === null) 
 	{
 		return false;
-	} 
-	for (let number of phoneBook)
+	}
+
+	for (let number of phoneBook) 
 	{
-		if (number !== undefined && number.phone === correctphone)
+		if (number !== undefined && number.phone === correctPhone) 
 		{
 			return false;
 		}
 	}
-	phoneBook.push(search);
-	
+
+	phoneBook.push(
+		{ 
+			phone: correctPhone, 
+			name: name, 
+			email: email 
+		});
+
 	return true;
 }
 
-function CorrectPhone(phone)
+function CorrectPhone(phone) 
 {
-	if (phone.match(/\+7-\d{3}-\d{3}-\d{2}-d{2}/) !== null)
+	if (phone.match(/\+\d-\d{3}-\d{3}-\d{2}-\d{2}/) !== null) 
 	{
 		return phone.replace(/-/g, '');
-	}
-		else if (phone.match(/\+7\d{10}/) !== null)
+	} 
+	else if (phone.match(/\+\d{11}/) !== null) 
 	{
 		return phone;
-	}
-		else
+	} 
+	else 
 	{
 		return null;
 	}

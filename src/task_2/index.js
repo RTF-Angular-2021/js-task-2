@@ -18,42 +18,42 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
-function CorrectPhone(phone)
+function CorrectPhone(phone) 
 {
-	if (phone.match(/\+7-\d{3}-\d{3}-\d{2}-d{2}/) !== null)
-		{
-			return phone.replace(/-/g, '');
-		}
-		else if (phone.match(/\+7\d{10}/) !== null)
-		{
-			return phone;
-		}
-		else
-		{
-			return null;
-		}
-		
+	if (phone.match(/\+\d-\d{3}-\d{3}-\d{2}-\d{2}/) !== null) 
+	{
+		return phone.replace(/-/g, '');
+	} 
+	else if (phone.match(/\+\d{11}/) !== null) 
+	{
+		return phone;
+	} 
+	else 
+	{
+		return null;
+	}
 }
+
 function update(phoneBook, phone, name, email) 
 {
-	const correctphone = CorrectPhone(phone);
+	const correctPhone = CorrectPhone(phone)
 
-	if (name === '' || name === undefined || correctphone === null)
+	if ( name === undefined || name === '' || correctPhone === null) 
 	{
 		return false;
 	}
 
-	for (let number of phoneBook)
+	for (let number of phoneBook) 
 	{
-		if (number !== undefined && number.phone == correctphone)
+		if (number !== undefined && number.phone === correctPhone) 
 		{
+			number.phone = phone;
 			number.name = name;
 			number.email = email;
-			number.phone = phone;
 			return true;
 		}
-		return false;
 	}
-}
 
+	return false;
+}
 module.exports.update = update;

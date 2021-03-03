@@ -11,33 +11,38 @@
 @param {string} csv Csv строка, описывающая таблицу, формата name;phone;email
 @returns {number} Количество добавленных и обновленных записей
  */
-const { add } = require("../task_1");
-const { update } = require("../task_2");
-const { find } = require("../task_3");
+const { add } = require('../../src/task_1/index');
+const { update } = require('../../src/task_2/index');
+const { find } = require('../../src/task_3/index');
+
 function importFromCsv(phoneBook, csv) 
 {
 	let counter = 0;
-	const csvStr = csv.split('\n');
+	const csvSt = csv.split('\n');
 
-	for (let csvString of csvStr)
+	for (let csvString of csvSt) 
 	{
 		let Arr = csvString.split(';');
 		const phone = Arr[0];
 		const name = Arr[1];
 		const email = Arr[2];
 
-		if (find(phoneBook, phone).length > 0)
+		if (find(phoneBook, phone).length > 0) 
 		{
-			if (update(phoneBook, phone, name, email))
+			if (update(phoneBook, phone, name, email)) 
+			{
+				counter++;
+			}
+		} 
+		else 
+		{
+			if (add(phoneBook, phone, name, email)) 
 			{
 				counter++;
 			}
 		}
-		if (add(phoneBook, phone, name, email))
-		{
-			counter++;
-		}
 	}
+
 	return counter;
 }
 
