@@ -24,7 +24,7 @@ function add(phoneBook, phone, name, email)
 	const correctphone = CorrectPhone(phone);
 	const search = {phone: phone, name: name, email: email};	
 
-	if (!name || !correctphone === null)
+	if (!name || correctphone === null)
 	{
 		return false;
 	} 
@@ -35,15 +35,23 @@ function add(phoneBook, phone, name, email)
 			return false;
 		}
 	}
-	phoneBook.push(search)
-		return true;
+	phoneBook.push(search);
+	
+	return true;
 }
 
 function CorrectPhone(phone)
 	{
 		const firstPhone = /\+7\d{10}/;
 		const secondPhone = /\+7\-\d{3}\-\d{3}\-\d{2}\-d{2}/;
-		return firstPhone.test(phone) || secondPhone.test(phone);
+		if (firstPhone !== null)
+		{
+			return phone;
+		}
+		if (secondPhone !== null)
+		{
+			return phone.replace(/-/g, '');
+		}
 	}
 
 module.exports.add = add;
