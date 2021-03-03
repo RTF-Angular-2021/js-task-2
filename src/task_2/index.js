@@ -19,6 +19,33 @@
 @returns {boolean} Результат обновления
  */
 function update(phoneBook, phone, name, email) {
+	const rightPhone = getRightPhone(phone);
+	if (name === undefined || name === '' || rightPhone === null) {
+		return false;
+	}
+
+	for (let item of phoneBook) {
+		if (item !== undefined && item.phone === rightPhone) {
+			item.email = email;
+			item.phone = phone;
+			item.name = name;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function getRightPhone(phone) {
+	if (phone.match(/\+\d-\d{3}-\d{3}-\d{2}-\d{2}/) !== null) {
+		return phone.replace(/-/g, '');
+	} 
+	else if (phone.match(/\+\d{11}/) !== null) {
+		return phone;
+	} 
+	else {
+		return null;
+	}
 }
 
 module.exports.update = update;
