@@ -18,7 +18,35 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
-function update(phoneBook, phone, name, email) {
+function CorrectPhone(phone)
+{
+	const firstPhone = /\+7\d{10}/;
+	const secondPhone = /\+7\-\d{3}\-\d{3}\-\d{2}\-d{2}/;
+	return phone.match(firstPhone) !== null || phone.match(secondPhone) !== null;
+}
+function update(phoneBook, phone, name, email) 
+{
+	const correctphone = CorrectPhone(phone);
+
+	if (name === '' || name === undefined)
+	{
+		return false;
+	}
+	if (!correctphone)
+	{
+		return false;
+	}
+	for (let number of phoneBook)
+	{
+		if (number !== undefined && number.phone == correctphone)
+		{
+			number.name = name;
+			number.email = email;
+			number.phone = phone;
+			return true;
+		}
+		return false;
+	}
 }
 
 module.exports.update = update;

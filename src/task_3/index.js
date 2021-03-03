@@ -18,7 +18,45 @@
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
-function find(phoneBook, query) {
+function phone (phone, name, email)
+{
+	const correct = `+7 (${phone.slice(1,4)}) ${phone.slice(4,7)}-${phone.slice(7,9)}-${phone.slice(9,11)}`;
+	if (email === undefined)
+	{
+		return `${name} ${correct}`;
+	}
+	return `${name} ${correct} ${email}`;
+}
+function find(phoneBook, query) 
+{
+	let Arr = [];
+
+	if (query === '*')
+	{
+		phoneBook.forEach(element => {Arr.push(correct(element.phone, element.name, element.email));});
+		return Arr;
+	}
+
+	phoneBook.forEach(element => 
+		{
+			if (element !== undefined)
+			{
+				if (element.name.includes(query))
+				{
+					Arr.push(correct(element.phone, element.name, element.email));
+				}
+				if (element.phone.includes(query.replace(/-/g, '')))
+				{
+					Arr.push(correct(element.phone, element.name, element.email));
+				}
+				if (element.email.includes(query))
+				{
+					Arr.push(correct(element.phone, element.name, element.email));
+				}
+			}
+		});
+		return Arr;
 }
 
 module.exports.find = find;
+
