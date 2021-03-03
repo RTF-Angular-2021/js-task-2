@@ -1,3 +1,4 @@
+const  {find} = require( "../task_3/index")
 /** Задача 2 - Функция findAndRemove
 Требуется написать функцию findAndRemove, которая
 принимает: 
@@ -12,7 +13,11 @@
 @param {string} query Строка для поиска
 @returns {number} Количество удаленных записей
  */
+
+
 function findAndRemove(phoneBook, query) {
+	let enumerator = 0
+	return find(phoneBook,query).length
 }
 
 module.exports.findAndRemove = findAndRemove;

@@ -1,3 +1,5 @@
+const { TestScheduler } = require("jest")
+
 /** Задача 2 - Функция find
 Требуется написать функцию find, которая
 принимает: 
@@ -18,7 +20,38 @@
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
+const truePhone = (item, query) => item.filter(({ phone, name, email }) => {
+	if (query === '*') return true 
+	
+	const delet = phone.replace(/\D/g, '')
+	const formatPhone = `+7 (${delet.substr(1, 3)}) ${delet.substr(4, 3)}-${delet.substr(7, 2)}-${delet.substr(9)}`
+	if (email === undefined){
+		if ((delet.includes(query.replace(/\D/g, ''))&& query.replace(/\D/g, '').length !== 0 ) || name.includes(query)){
+			return true
+		}
+	}
+	else{
+		if (delet.includes(query.replace(/\D/g, '')) || name.includes(query) || email.includes(query)){
+         return true
+		}
+		
+	} 
+	return false
+}).map(({ phone, name, email }) => {
+	const delet = phone.replace(/\D/g, '')
+	const formatPhone = `+7 (${delet.substr(1, 3)}) ${delet.substr(4, 3)}-${delet.substr(7, 2)}-${delet.substr(9)}`
+	if (email === undefined){
+		return name + ' ' + formatPhone
+	}
+	else return name + ' ' + formatPhone + ' ' + email
+})
+
 function find(phoneBook, query) {
+	if (query !== '' && query !== undefined) {
+		return truePhone(phoneBook, query)
+	}
+	return []
+
 }
 
-module.exports.find = find;
+module.exports.find = find

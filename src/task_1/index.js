@@ -20,6 +20,22 @@
 @returns {boolean} Результат добавления
  */
 function add(phoneBook, phone, name, email) {
+	const statusName = name != "" && name != undefined
+	const statusPhone = Array.from( phone ).filter(x => x.match(/[0-9]/)).length === 11
+	const isPhone = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/
+	const truePhone = isPhone.test(phone)
+	if (truePhone && statusName && statusPhone) {
+		const obj = { phone:phone, name: name, email: email }
+		for (let k = 0; k < phoneBook.length; k++) {
+			const status = Array.from(phoneBook[k].phone).filter(x => x.match(/[0-9]/)).toString() === Array.from(obj.phone).filter(x => x.match(/[0-9]/)).toString()
+			if (status === true) {
+				return false
+			}
+		}
+		phoneBook.push(obj)
+		return true
+	}
+	else { return false }
 }
 
-module.exports.add = add;
+module.exports.add = add

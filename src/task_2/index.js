@@ -18,7 +18,23 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
+
+
+ const checkNumber = phone => (/\+7\-\d{3}\-\d{3}\-\d{2}-\d{2}/.test(phone) || /\+7\d{10}/.test(phone)) &&  !/[a-z]/.test(phone) ? phone.replace(/\D/g,'') : null ;
 function update(phoneBook, phone, name, email) {
+	const newPhone = checkNumber(phone)
+	if (!newPhone || name === '' || name === undefined ) {return false
+	}else {
+		for (let item of phoneBook){
+			if (checkNumber(item.phone) === checkNumber( phone )) {
+				item.phone = phone
+				item.name = name
+				item.email = email
+			 return true
+			}
+		}
+		return false
+	}
 }
 
 module.exports.update = update;
