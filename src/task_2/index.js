@@ -20,29 +20,29 @@
  */
 function CorrectPhone(phone)
 {
-	if (phone.match(/\+7\d{10}/) !== null)
-		{
-			return phone;
-		}
-		if (phone.match(/\+7-\d{3}-\d{3}-\d{2}-d{2}/) !== null)
+	if (phone.match(/\+7-\d{3}-\d{3}-\d{2}-d{2}/) !== null)
 		{
 			return phone.replace(/-/g, '');
 		}
-		return null;
-	}
+		else if (phone.match(/\+7\d{10}/) !== null)
+		{
+			return phone;
+		}
+		else
+		{
+			return null;
+		}
+		
 }
 function update(phoneBook, phone, name, email) 
 {
 	const correctphone = CorrectPhone(phone);
 
-	if (name === '' || name === undefined)
+	if (name === '' || name === undefined || correctphone === null)
 	{
 		return false;
 	}
-	if (correctphone === null)
-	{
-		return false;
-	}
+
 	for (let number of phoneBook)
 	{
 		if (number !== undefined && number.phone == correctphone)
