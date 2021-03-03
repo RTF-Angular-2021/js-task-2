@@ -19,6 +19,44 @@
 @returns {Array<string>} Результаты поиска
  */
 function find(phoneBook, query) {
+	let result = [];
+	if (!query) return result;
+	if (query == "*") return extractAllContacts(phoneBook);
+
+    query = query.replaceAll("-", "");
+	for (let contact of phoneBook){
+		for (let property in contact){
+			if (contact[property].search(query) != -1
+				|| (property == "phone" 
+				&& contact[property].replaceAll("-", "").search(query) != -1)){
+					result.push(formatContact(contact));
+					break;
+			}
+		}
+	}
+
+	return result;
+}
+
+function extractAllContacts(phoneBook) {
+	let result = [];
+	for (let contact of phoneBook){
+		result.push(formatContact(contact));
+	}
+
+	return result;
+}
+
+function formatContact(contact) {
+	let phone = contact.phone.replaceAll("-", "");
+	let formattedPhone = `${phone.slice(0, 2)} ` +
+    `(${phone.slice(2, 5)}) ` +
+    `${phone.slice(5, 8)}-${phone.slice(8, 10)}-${phone.slice(10)}`;
+
+	let formattedContact = `${contact.name} ${formattedPhone}`;
+	if (contact.email != undefined) formattedContact += ` ${contact.email}`;
+
+	return formattedContact;
 }
 
 module.exports.find = find;

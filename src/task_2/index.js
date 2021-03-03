@@ -19,6 +19,19 @@
 @returns {boolean} Результат обновления
  */
 function update(phoneBook, phone, name, email) {
+	if (phone.search(/^\+\d-\d{3}-\d{3}-\d{2}-\d{2}$|^\+\d{11}$/) == -1
+		|| !name) return false;
+
+	for (let contact of phoneBook){
+		if (contact.phone.replaceAll("-", "") == phone.replaceAll("-", "")){
+			contact.name = name;
+			if (email instanceof String) contact.email = email;
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 module.exports.update = update;

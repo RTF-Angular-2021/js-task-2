@@ -13,6 +13,33 @@
 @returns {number} Количество удаленных записей
  */
 function findAndRemove(phoneBook, query) {
+	let deletedContacts = 0;
+	if (!query) return deletedContacts;
+	if (query == "*") return deleteAllContacts(phoneBook);
+
+	query = query.replaceAll("-", "");
+	let index = 0;
+	for (let contact of phoneBook){
+		for (let property in contact){
+			if (contact[property].search(query) != -1
+				|| (property == "phone" 
+				&& contact[property].replaceAll("-", "").search(query) != -1)){
+					phoneBook.slice(index, index);
+					deletedContacts++;
+					break;
+			}
+		}
+		index++;
+	}
+
+	return deletedContacts;
+}
+
+function deleteAllContacts(phoneBook){
+	var length = phoneBook.length;
+	phoneBook = [];
+
+	return length;
 }
 
 module.exports.findAndRemove = findAndRemove;

@@ -20,6 +20,22 @@
 @returns {boolean} Результат добавления
  */
 function add(phoneBook, phone, name, email) {
+	if (phone.search(/^\+\d-\d{3}-\d{3}-\d{2}-\d{2}$|^\+\d{11}$/) == -1
+		|| !name) return false;
+	
+	for (let contact of phoneBook){
+        if (contact.phone.replaceAll("-", "") == phone.replaceAll("-", "")){
+			return false;
+		}
+	}
+
+	if (email != undefined){
+		phoneBook.push({phone: phone, name: name, email: email});
+	} else{
+		phoneBook.push({phone: phone, name: name});
+	}
+    
+	return true;
 }
 
 module.exports.add = add;
