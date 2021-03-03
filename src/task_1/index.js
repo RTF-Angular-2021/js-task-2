@@ -24,7 +24,7 @@ function add(phoneBook, phone, name, email) {
 		|| !name) return false;
 	
 	for (let contact of phoneBook){
-        if (contact.phone.replaceAll("-", "") == phone.replaceAll("-", "")){
+        if (contact.phone.replace(/-/g, "") == phone.replace(/-/g, "")){
 			return false;
 		}
 	}

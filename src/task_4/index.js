@@ -17,13 +17,13 @@ function findAndRemove(phoneBook, query) {
 	if (!query) return deletedContacts;
 	if (query == "*") return deleteAllContacts(phoneBook);
 
-	query = query.replaceAll("-", "");
+	query = query.replace(/-/g, "");
 	let index = 0;
 	for (let contact of phoneBook){
 		for (let property in contact){
 			if (contact[property].search(query) != -1
 				|| (property == "phone" 
-				&& contact[property].replaceAll("-", "").search(query) != -1)){
+				&& contact[property].replace(/-/g, "").search(query) != -1)){
 					phoneBook.slice(index, index);
 					deletedContacts++;
 					break;

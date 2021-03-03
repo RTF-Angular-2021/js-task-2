@@ -23,7 +23,7 @@ function update(phoneBook, phone, name, email) {
 		|| !name) return false;
 
 	for (let contact of phoneBook){
-		if (contact.phone.replaceAll("-", "") == phone.replaceAll("-", "")){
+		if (contact.phone.replace(/-/g, "") == phone.replace(/-/g, "")){
 			contact.name = name;
 			if (email instanceof String) contact.email = email;
 

@@ -23,12 +23,12 @@ function find(phoneBook, query) {
 	if (!query) return result;
 	if (query == "*") return extractAllContacts(phoneBook);
 
-    query = query.replaceAll("-", "");
+    query = query.replace(/-/g, "");
 	for (let contact of phoneBook){
 		for (let property in contact){
 			if (contact[property].search(query) != -1
 				|| (property == "phone" 
-				&& contact[property].replaceAll("-", "").search(query) != -1)){
+				&& contact[property].replace(/-/g, "").search(query) != -1)){
 					result.push(formatContact(contact));
 					break;
 			}
@@ -48,7 +48,7 @@ function extractAllContacts(phoneBook) {
 }
 
 function formatContact(contact) {
-	let phone = contact.phone.replaceAll("-", "");
+	let phone = contact.phone.replace(/-/g, "");
 	let formattedPhone = `${phone.slice(0, 2)} ` +
     `(${phone.slice(2, 5)}) ` +
     `${phone.slice(5, 8)}-${phone.slice(8, 10)}-${phone.slice(10)}`;
