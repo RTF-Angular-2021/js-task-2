@@ -18,7 +18,37 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
-function update(phoneBook, phone, name, email) {
+function update(phoneBook, phone, name, email)
+{
+	let check = false;
+
+	const format =  /^\+7\d{10}$/;
+	const formatTire = /^\+7-\d{3}-\d{3}-\d{2}-\d{2}$/;
+
+	if (!(format.test(phone)||formatTire.test(phone)))
+	{
+		return false;
+	}
+
+	for (const number of phoneBook)
+	{
+			
+		number.phone = number.phone.replace(/\D/g,'');
+
+    	if(number.phone === phone) 
+    	{
+        	check = true;
+    	}
+	}
+	if(name && check)
+	{
+		phoneBook.push({phone, name, email});
+		return true;
+    }
+	else
+	{
+		return false;
+	}
 }
 
 module.exports.update = update;

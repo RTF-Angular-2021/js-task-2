@@ -12,7 +12,36 @@
 @param {string} query Строка для поиска
 @returns {number} Количество удаленных записей
  */
-function findAndRemove(phoneBook, query) {
+const { find } = require('../../src/task_3/index');
+
+function findAndRemove(phoneBook, query) 
+{
+	let firstBufer;
+	let secondBufer;
+	let array;
+	let counter = 0;
+	if (query == '*')
+	{
+		counter = find(phoneBook, query).length;
+		delete(phoneBook[{}]);
+	}
+	else
+	{
+		for(const check of phoneBook) // искренне пытался делать с помощью "find", но получал очень странные результаты, потому отказался от идеи
+		{
+			secondBufer = check.phone.replace(/\D/g,'');
+    		array = secondBufer.split('');
+    		firstBufer = array.join('');
+    		secondBufer = `+${array[0]}-${array[1]+array[2]+array[3]}-${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
+			if (firstBufer.includes(query)||secondBufer.includes(query)||check.name.includes(query)||(check.email !== undefined && check.email.includes(query)))
+			{
+				delete phoneBook[check];
+				counter++;
+			}
+		}
+	}
+
+	return counter;
 }
 
 module.exports.findAndRemove = findAndRemove;
