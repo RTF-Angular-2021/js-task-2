@@ -19,6 +19,30 @@
 @returns {Array<string>} Результаты поиска
  */
 function find(phoneBook, query) {
+	let sortedArray = [];
+
+	for (let i = 0; i < phoneBook.length; i++) {
+		sortedArray.push(formatContact(phoneBook[i].phone, phoneBook[i].name, phoneBook[i].email));
+	}
+
+	if (query === '*') {
+		return sortedArray;
+	} else {
+		return sortedArray.filter(item => item.includes(query));
+	}
+
 }
+
+function formatContact (phone,name,email) {
+	phone = phone.replace(/-/g,'')
+	const correctphone = `+7 (${phone.slice(2,5)}) ${phone.slice(5,8)}-${phone.slice(8,10)}-${phone.slice(10,12)}`;
+	
+	if (email !== undefined) {
+		return `${name} ${correctphone} ${email}`;
+	}
+    else return `${name} ${correctphone}`
+}
+
+
 
 module.exports.find = find;

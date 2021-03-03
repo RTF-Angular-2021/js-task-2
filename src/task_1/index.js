@@ -20,6 +20,26 @@
 @returns {boolean} Результат добавления
  */
 function add(phoneBook, phone, name, email) {
+	if (isCorrectData(phone,name)){
+		newPhone = phone.replace(/-/g,"");
+		for (let obj in phoneBook) {
+			if ((phoneBook[obj].phone === phone) || (phoneBook[obj].phone === newPhone) || (phoneBook[obj].name === name)) {
+				return false;
+			}
+		}
+		phoneBook.push({phone:newPhone,name:name,email:email});
+		return true;
+	}
+	return false;
 }
 
+function isCorrectData (phone, name) {
+	if ((!phone.match(/\+7-\d{3}-\d{3}-\d{2}-\d{2}/g) && !phone.match(/\+7\d{10}/g)) || (!name))  {
+		return false;
+	}
+	else return true;
+}
+
+
 module.exports.add = add;
+module.exports.isCorrectData = isCorrectData;
