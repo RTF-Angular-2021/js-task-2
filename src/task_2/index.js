@@ -32,17 +32,17 @@ function update(phoneBook, phone, name, email)
 
 	for (const number of phoneBook)
 	{
-			
 		number.phone = number.phone.replace(/\D/g,'');
-
-    	if(number.phone === phone) 
+		phone = phone.replace(/\D/g,'');
+    	if(number.phone == phone) 
     	{
         	check = true;
     	}
 	}
 	if(name && check)
 	{
-		phoneBook.push({phone, name, email});
+		phoneBook.name = name;
+		phoneBook.email = email;
 		return true;
     }
 	else
