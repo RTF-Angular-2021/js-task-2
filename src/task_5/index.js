@@ -17,11 +17,11 @@ const { find } = require("../task_3");
 function importFromCsv(phoneBook, csv) 
 {
 	let counter = 0;
-	const csvStr = cvs.split('\n');
+	const csvStr = csv.split('\n');
 
-	for (let cvsString of csvStr)
+	for (let csvString of csvStr)
 	{
-		let Arr = cvsString.split(';');
+		let Arr = csvString.split(';');
 		const phone = Arr[0];
 		const name = Arr[1];
 		const email = Arr[2];

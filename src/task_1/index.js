@@ -21,17 +21,16 @@
  */
 function add(phoneBook, phone, name, email) 
 {
-	const firstPhone = /\+7\d{10}/;
-	const secondPhone = /\+7\-\d{3}\-\d{3}\-\d{2}\-d{2}/;
+	const correctphone = CorrectPhone(phone);
 	const search = {phone: phone, name: name, email: email};	
 
-	if (!name || !CorrectPhone(phone))
+	if (!name || !correctphone === null)
 	{
 		return false;
 	} 
 	for (let number of phoneBook)
 	{
-		if (number !== undefined && number.phone === CorrectPhone(phone))
+		if (number !== undefined && number.phone === correctphone)
 		{
 			return false;
 		}
@@ -42,7 +41,9 @@ function add(phoneBook, phone, name, email)
 
 function CorrectPhone(phone)
 	{
-		return phone.match(firstPhone) !== null || phone.match(secondPhone) !== null;
+		const firstPhone = /\+7\d{10}/;
+		const secondPhone = /\+7\-\d{3}\-\d{3}\-\d{2}\-d{2}/;
+		return firstPhone.test(phone) || secondPhone.test(phone);
 	}
 
 module.exports.add = add;

@@ -18,14 +18,14 @@
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
-function phone (phone, name, email)
+function correct (phone, name, email)
 {
-	const correct = `+7 (${phone.slice(1,4)}) ${phone.slice(4,7)}-${phone.slice(7,9)}-${phone.slice(9,11)}`;
+	const correctPh = `+7 (${phone.slice(1,4)}) ${phone.slice(4,7)}-${phone.slice(7,9)}-${phone.slice(9,11)}`;
 	if (email === undefined)
 	{
-		return `${name} ${correct}`;
+		return `${name} ${correctPh}`;
 	}
-	return `${name} ${correct} ${email}`;
+	return `${name} ${correctPh} ${email}`;
 }
 function find(phoneBook, query) 
 {

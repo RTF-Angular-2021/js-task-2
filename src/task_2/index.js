@@ -22,7 +22,7 @@ function CorrectPhone(phone)
 {
 	const firstPhone = /\+7\d{10}/;
 	const secondPhone = /\+7\-\d{3}\-\d{3}\-\d{2}\-d{2}/;
-	return phone.match(firstPhone) !== null || phone.match(secondPhone) !== null;
+	return firstPhone.test(phone) || secondPhone.test(phone);
 }
 function update(phoneBook, phone, name, email) 
 {
@@ -32,7 +32,7 @@ function update(phoneBook, phone, name, email)
 	{
 		return false;
 	}
-	if (!correctphone)
+	if (correctphone === null)
 	{
 		return false;
 	}

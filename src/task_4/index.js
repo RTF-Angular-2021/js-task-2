@@ -14,6 +14,16 @@
  */
 function findAndRemove(phoneBook, query) 
 {
+	if (query === '*')
+	{
+		for (let i in phoneBook)
+		{
+			delete phoneBook[i];
+			counter++;
+		}
+	return counter;
+	}
+
 	let counter = 0;
 	for (let i in phoneBook)
 	{
@@ -31,23 +41,13 @@ function findAndRemove(phoneBook, query)
 				counter++;
 				continue;
 			}
-			if (phoneBook[i].email.includes(query))
+			if (phoneBook[i].email !== undefined && phoneBook[i].email.includes(query))
 			{
 				delete phoneBook[i];
 				counter++;
 			}
 		}
 	}
-	if (query === '*')
-	{
-		for (let i in phoneBook)
-		{
-			delete phoneBook[i];
-			counter++;
-		}
-	}
-	return counter;
-
 }
 
 module.exports.findAndRemove = findAndRemove;
