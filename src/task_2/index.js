@@ -21,26 +21,21 @@
 function update(phoneBook, phone, name, email) {
 	let result;
 
-	if(!(/\+7-\d{3}-\d{3}-\d{2}-\d{2}/).test(phone) && !(/\+7\d{10}/).test(phone) || (/[a-z]/).test(phone)){
+	if(!(/\+7-\d{3}-\d{3}-\d{2}-\d{2}/).test(phone) && !(/\+7\d{10}/).test(phone) || (/[a-z]/).test(phone) || !name){
 		return false;
 	}
 
-	if(!name) {
-		return false;
-	}
-
-	phoneBook.forEach(element =>{
+	for (let element of phoneBook){
 		if(element.phone.match(/\d/g).join('') === phone.match(/\d/g).join('')){
-			console.log(element.phone);		
 			element.name = name;
 			element.email = email;
-			result = true;
+			if(!email){
+				delete element.email;
+			}
+			return true;
 		}
-		else{
-			result = false;
-		}
-	});
-	return result;
+	};
+	return false;
 }
 
 module.exports.update = update;
