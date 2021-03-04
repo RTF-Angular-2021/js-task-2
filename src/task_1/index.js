@@ -20,19 +20,31 @@
 @returns {boolean} Результат добавления
  */
 
- const re = /((8|\+7)-?)?\(?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}/g
+
+
 function add(phoneBook = [], phone, name, email) {
-	let item = {phone: phone, name: name, email: email};
-	if(phoneBook.some(i => i.phone === phone)) return false;
-	if(!phone.match(re) || !name)
+	phone = phone.split('-').join('');
+	let item = {phone, name, email};
+	if(phoneBook.some(i => item.phone === i.phone))
+		return false;
+	if(!isCellNumber(phone) || !name)
 		return false;
 	phoneBook.push(item);
 	return true;
+}
+
+function isCellNumber(phone){
+	const dashRe = /^\+7-\d{3}-\d{3}-\d{2}-\d{2}$/; 
+	const noDashRe = /^\+7\d{10}$/;
+	return dashRe.test(phone) || noDashRe.test(phone);
 }
 
 let phoneBook = []
 add(phoneBook, '+78005553535', 'Сергей', 'sergey@mail.ru')
 add(phoneBook, '+7-800-333-55-55', 'Антон', 'anton@mail.ru')
 add(phoneBook, '+78005553535', 'Сергей', 'sergey@mail.ru')
+add(phoneBook, '+7-800-555-35-35', 'Андрей', 'andrey@mail.ru')
+add(phoneBook, '+7-800-555-35-35', 'Андрей', 'andrey@mail.ru')
 
 module.exports.add = add;
+module.exports.isCellNumber = isCellNumber;

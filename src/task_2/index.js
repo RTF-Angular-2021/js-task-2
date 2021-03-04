@@ -18,7 +18,23 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
+let {isCellNumber} = require('../../src/task_1/index');
+
 function update(phoneBook, phone, name, email) {
+	if (!name){
+		if (isCellNumber(phone)){
+			phone = phone.match(/\d/g).join('');
+			
+			for (let item of phoneBook){
+				if (item.phone === phone){
+					item.name = name;
+					item.email = email;
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }
 
 module.exports.update = update;
