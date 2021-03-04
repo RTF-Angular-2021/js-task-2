@@ -18,7 +18,38 @@
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
-function find(phoneBook, query) {
+function find(phoneBook, query) 
+{
+	let massiv = [];
+	if (query === '*') 
+	{
+		phoneBook.forEach(element => {massiv.push(correct(element.phone, element.name, element.email));});
+		return massiv;
+	}
+	phoneBook.forEach(element => {
+		if (element !== undefined) 
+		{
+			if (element.email.includes(query) && element.email !== undefined) 
+			{
+				massiv.push(correct(element.phone, element.name, element.email));
+			}
+			if (element.phone.includes(query.replace(/-/g, '')) || element.name.includes(query)) 
+			{
+				massiv.push(correct(element.phone, element.name, element.email));
+			}
+		}
+	});
+	return massiv;
+}
+
+function correct(phone, name, email) 
+{
+	const formattedPhone = `${phone.slice(0, 2)} (${phone.slice(2, 5)}) ${phone.slice(5, 8)}-${phone.slice(8, 10)}-${phone.slice(10, 12)}`;
+	if (email === undefined) 
+	{
+		return `${name} ${formattedPhone}`;
+	}
+	return `${name} ${formattedPhone} ${email}`;
 }
 
 module.exports.find = find;
