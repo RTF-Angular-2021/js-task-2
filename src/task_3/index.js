@@ -42,7 +42,7 @@ let showAll = (phoneBook) => {
 	let resultArray = [];
 	phoneBook.forEach(element => {
 		if(!element.email){
-		element.email = '';
+			resultArray.push(`${element.name} ${sortNumberPhone(element.phone)}`);
 		};
 		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
 	});
@@ -55,7 +55,7 @@ let showByNumber = (phoneBook, numbers) => {
 	phoneBook.forEach(element => {
 		if(regExp.test(element.phone)){
 		if(!element.email){
-		element.email = '';
+			resultArray.push(`${element.name} ${sortNumberPhone(element.phone)}`);
 		};
 		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
 		};
@@ -71,7 +71,7 @@ let showBySomething = (phoneBook, query) => {
 		for( let key in element){
 		if(regExp.test(element[key])){
 		if(!element.email){
-		element.email = '';
+			resultArray.push(`${element.name} ${sortNumberPhone(element.phone)}`);
 		};
 		
 		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
