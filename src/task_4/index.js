@@ -26,7 +26,7 @@ function findAndRemove(phoneBook, query) {
 	}
   
 	if(/\d/.test(query)){
-		return count - showByNumber(phoneBook, query);
+		return showByNumber(phoneBook, query);
 	};
 	
 	  return showBySomething(phoneBook, query);
@@ -34,7 +34,7 @@ function findAndRemove(phoneBook, query) {
 
   //Функции
 
-  let showByNumber = (phoneBook, numbers) => {
+function showByNumber(phoneBook, numbers) {
 	let regExp = new RegExp(`${numbers.match(/\d/g).join('')}`),
 		resultArray = [];
 
@@ -47,19 +47,19 @@ function findAndRemove(phoneBook, query) {
 	return resultArray.length;
 }
 	
-  let showBySomething = (phoneBook, query) => {
-	  let regExp = new RegExp(`${query}`),
-		  resultArray = [];
-  
-	  phoneBook.forEach(element => {
-		  for( let key in element){
-		if(regExp.test(element[key])){
-		  let index = phoneBook.indexOf(element);
-		  resultArray.push(phoneBook.slice(index, index));
+  function showBySomething(phoneBook, query) {
+	let regExp = new RegExp(`${query}`),
+		resultArray = [];
+
+	phoneBook.forEach(element => {
+		for (let key in element) {
+			if (regExp.test(element[key])) {
+				let index = phoneBook.indexOf(element);
+				resultArray.push(phoneBook.slice(index, index));
+			};
 		};
-		  };   
-	  });
-	  return resultArray.length;
-  }
+	});
+	return resultArray.length;
+}
 
 module.exports.findAndRemove = findAndRemove;
