@@ -38,45 +38,51 @@ let sortNumberPhone = (phone) => {
 	return `+${phone.slice(0, 1)} (${phone.slice(1, 4)}) ${phone.slice(4, 7)}-${phone.slice(7, 9)}-${phone.slice(9, 11)}`
   }
   
-let showAll = (phoneBook) => {
+  function showAll(phoneBook) {
 	let resultArray = [];
 	phoneBook.forEach(element => {
-		if(!element.email){
+		if (!element.email) {
 			resultArray.push(`${element.name} ${sortNumberPhone(element.phone)}`);
 		};
-		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
+		if (element.email) {
+			resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
+		}
 	});
 	return resultArray;
-	}
+}
   
-let showByNumber = (phoneBook, numbers) => {
+function showByNumber(phoneBook, numbers) {
 	let regExp = new RegExp(`${numbers.match(/\d/g).join('')}`),
 		resultArray = [];
 	phoneBook.forEach(element => {
-		if(regExp.test(element.phone)){
-		if(!element.email){
-			resultArray.push(`${element.name} ${sortNumberPhone(element.phone)}`);
-		};
-		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
+		if (regExp.test(element.phone)) {
+			if (!element.email) {
+				resultArray.push(`${element.name} ${sortNumberPhone(element.phone)}`);
+			};
+			if (element.email) {
+				resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
+			}
 		};
 	});
 	return resultArray;
 }
   
-let showBySomething = (phoneBook, query) => {
+function showBySomething(phoneBook, query) {
 	let regExp = new RegExp(`${query}`),
 		resultArray = [];
 
 	phoneBook.forEach(element => {
-		for( let key in element){
-		if(regExp.test(element[key])){
-		if(!element.email){
-			resultArray.push(`${element.name} ${sortNumberPhone(element.phone)}`);
+		for (let key in element) {
+			if (regExp.test(element[key])) {
+				if (!element.email) {
+					resultArray.push(`${element.name} ${sortNumberPhone(element.phone)}`);
+				};
+
+				if (element.email) {
+					resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
+				}
+			};
 		};
-		
-		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
-		};
-		};   
 	});
 	return resultArray;
 }
