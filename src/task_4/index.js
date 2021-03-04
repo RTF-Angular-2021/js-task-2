@@ -36,16 +36,16 @@ function findAndRemove(phoneBook, query) {
 
   let showByNumber = (phoneBook, numbers) => {
 	let regExp = new RegExp(`${numbers.match(/\d/g).join('')}`),
-	  resultArray = [];
-	
-	  phoneBook.forEach(element => {
-	  let index = phoneBook.indexOf(element);
-		  if(regExp.test(element.phone)){
-		resultArray.push(phoneBook.slice(index, index))
-		  };
-	  });
-	  return resultArray.length;
-  }
+		resultArray = [];
+
+	phoneBook.forEach(element => {
+		let index = phoneBook.indexOf(element);
+		if (regExp.test(element.phone.match(/\d/g).join(''))) {
+			resultArray.push(phoneBook.slice(index, index));
+		};
+	});
+	return resultArray.length;
+}
 	
   let showBySomething = (phoneBook, query) => {
 	  let regExp = new RegExp(`${query}`),
