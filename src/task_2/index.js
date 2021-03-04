@@ -20,7 +20,7 @@
  */
 function update(phoneBook, phone, name, email) {
 
-	if(!phone.match(/^\+7-\d{3}-\d{3}-\d{2}-\d{2}/) && !phone.match(/^\+7\d{10}/)){
+	if((/[a-z]/).test(phone)){
 		return false;
 	}
 
@@ -38,7 +38,5 @@ function update(phoneBook, phone, name, email) {
 
 	return false;
 }
-
-
 
 module.exports.update = update;
