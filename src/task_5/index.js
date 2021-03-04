@@ -25,7 +25,7 @@ function importFromCsv(phoneBook, csv) {
 	};
 
 	array.forEach(element =>{
-		if (add(phoneBook, element[0], element[1], element[2]) || update(phoneBook, element[0], element[1], element[2]) {
+		if (add(phoneBook, element[0], element[1], element[2]) || update(phoneBook, element[0], element[1], element[2])) {
 			count++;
 		};
 	})
