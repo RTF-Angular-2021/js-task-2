@@ -19,7 +19,20 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат добавления
  */
-function add(phoneBook, phone, name, email) {
+
+ const re = /((8|\+7)-?)?\(?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}/g
+function add(phoneBook = [], phone, name, email) {
+	let item = {phone: phone, name: name, email: email};
+	if(phoneBook.some(i => i.phone === phone)) return false;
+	if(!phone.match(re) || !name)
+		return false;
+	phoneBook.push(item);
+	return true;
 }
+
+let phoneBook = []
+add(phoneBook, '+78005553535', 'Сергей', 'sergey@mail.ru')
+add(phoneBook, '+7-800-333-55-55', 'Антон', 'anton@mail.ru')
+add(phoneBook, '+78005553535', 'Сергей', 'sergey@mail.ru')
 
 module.exports.add = add;
