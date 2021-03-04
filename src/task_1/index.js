@@ -20,6 +20,32 @@
 @returns {boolean} Результат добавления
  */
 function add(phoneBook, phone, name, email) {
+	phoneBook = [];
+	if (name !== '' && name !== undefined && isPhjneCorrect(phone)){
+		phone = phone.match(/\d/g).join('');
+		const entry = { phone: phone, name: name, email: email };
+		if (!isPhoneBook(phone, phoneBook)){
+			phoneBook.push(entry);
+			return true;
+		}
+	}
+	return false;
+}
+
+function isPhjneCorrect(phone){
+	let reg = /^\+7-\d{3}-\d{3}-\d{2}-\d{2}$/;
+	let reg1 = /^\+7\d{10}$/;
+	return reg.test(phone) || reg1.test(phone);
+}
+
+function isPhoneBook(phoneBook, phone){
+	for (let entry of phoneBook){
+		if (entry.phone === phone){
+			return true;
+		}
+	}
+	return false;
 }
 
 module.exports.add = add;
+module.exports.isPhjneCorrect = isPhjneCorrect;
