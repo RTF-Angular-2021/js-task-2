@@ -1,4 +1,4 @@
-const { add } = require('../../src/task_1/index');
+const { add } = require('GitHub/js-task-2/src/task_1/index');
 
 const phoneBook = [];
 
