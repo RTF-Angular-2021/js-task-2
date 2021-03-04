@@ -12,7 +12,54 @@
 @param {string} query Строка для поиска
 @returns {number} Количество удаленных записей
  */
+
 function findAndRemove(phoneBook, query) {
-}
+	let count = phoneBook.length;
+  
+	if(!query){
+		return
+	};
+	
+	  if (query === '*') {
+	  phoneBook.splice(0, phoneBook.length);
+	  return count - phoneBook.length;
+	}
+  
+	if(/\d/.test(query)){
+		return count - showByNumber(phoneBook, query);
+	};
+	
+	  return showBySomething(phoneBook, query);
+  }
+
+  //Функции
+
+  let showByNumber = (phoneBook, numbers) => {
+	let regExp = new RegExp(`${numbers.match(/\d/g).join('')}`),
+	  resultArray = [];
+	
+	  phoneBook.forEach(element => {
+	  let index = phoneBook.indexOf(element);
+		  if(regExp.test(element.phone)){
+		resultArray.push(phoneBook.slice(index, index))
+		  };
+	  });
+	  return resultArray.length;
+  }
+	
+  let showBySomething = (phoneBook, query) => {
+	  let regExp = new RegExp(`${query}`),
+		  resultArray = [];
+  
+	  phoneBook.forEach(element => {
+		  for( let key in element){
+		if(regExp.test(element[key])){
+		  let index = phoneBook.indexOf(element);
+		  resultArray.push(phoneBook.slice(index, index));
+		};
+		  };   
+	  });
+	  return resultArray.length;
+  }
 
 module.exports.findAndRemove = findAndRemove;

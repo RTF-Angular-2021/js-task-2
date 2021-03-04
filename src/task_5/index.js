@@ -11,7 +11,25 @@
 @param {string} csv Csv строка, описывающая таблицу, формата name;phone;email
 @returns {number} Количество добавленных и обновленных записей
  */
+
+const { add } = require('../../src/task_1/index');
+const { update } = require('../../src/task_2/index');
+
 function importFromCsv(phoneBook, csv) {
+	let array = [],
+			count = 0;
+	csv = csv.split('\n');
+
+	for (const element of csv) {
+		array.push(element.split(';'))
+	};
+
+	array.forEach(element =>{
+		if (add(phoneBook, element[0], element[1], element[2]) || update(phoneBook, element[0], element[1], element[2]) {
+			count++;
+		};
+	})
+	return count;
 }
 
 module.exports.importFromCsv = importFromCsv;

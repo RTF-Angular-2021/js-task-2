@@ -19,7 +19,39 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат добавления
  */
+
 function add(phoneBook, phone, name, email) {
+
+	let boolean = true;
+
+	if(!phone.match(/^\+7-\d{3}-\d{3}-\d{2}-\d{2}/) && !phone.match(/^\+7\d{10}/)){
+		return false;
+	}
+
+	if(!name) {
+		return false;
+	}
+
+	const OBJ = {
+		phone: phone.match(/\d/g).join(''),
+		name,
+		email,
+	};
+
+	phoneBook.forEach(element => {
+		if(element.phone === OBJ.phone){
+			boolean = false;			
+		}
+	});
+
+	if(boolean){
+		phoneBook.push(OBJ);
+		return true;
+	}
+	else{
+		return false;
+	}
+	
 }
 
 module.exports.add = add;

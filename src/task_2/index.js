@@ -19,6 +19,26 @@
 @returns {boolean} Результат обновления
  */
 function update(phoneBook, phone, name, email) {
+
+	if(!phone.match(/^\+7-\d{3}-\d{3}-\d{2}-\d{2}/) && !phone.match(/^\+7\d{10}/)){
+		return false;
+	}
+
+	if(!name) {
+		return false;
+	}
+
+	phoneBook.forEach(element =>{
+		if(element.phone === phone){
+			element.name = name;
+			element.email = email;
+			return true;
+		}
+	});
+
+	return false;
 }
+
+
 
 module.exports.update = update;

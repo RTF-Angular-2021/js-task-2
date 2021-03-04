@@ -19,6 +19,66 @@
 @returns {Array<string>} Результаты поиска
  */
 function find(phoneBook, query) {
+	if(!query){
+	  return
+	};
+	if(query === "*"){
+	  return showAll;
+	};
+	if(/\d/.test(query)){
+	  return showByNumber(phoneBook, query);
+	};
+	return showBySomething(phoneBook, query);
+}
+
+//Функции
+
+let sortNumberPhone = (phone) => {
+	phone = phone.match(/\d/g).join('')
+	return `+${phone.slice(0, 1)} (${phone.slice(1, 4)}) ${phone.slice(4, 7)}-${phone.slice(7, 9)}-${phone.slice(9, 11)}`
+  }
+  
+let showAll = (phoneBook) => {
+	let resultArray = [];
+	phoneBook.forEach(element => {
+		if(!element.email){
+		element.email = '';
+		};
+		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
+	});
+	return resultArray;
+	}
+  
+let showByNumber = (phoneBook, numbers) => {
+	let regExp = new RegExp(`${numbers.match(/\d/g).join('')}`),
+		resultArray = [];
+	phoneBook.forEach(element => {
+		if(regExp.test(element.phone)){
+		if(!element.email){
+		element.email = '';
+		};
+		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
+		};
+	});
+	return resultArray;
+}
+  
+let showBySomething = (phoneBook, query) => {
+	let regExp = new RegExp(`${query}`),
+		resultArray = [];
+
+	phoneBook.forEach(element => {
+		for( let key in element){
+		if(regExp.test(element[key])){
+		if(!element.email){
+		element.email = '';
+		};
+		
+		resultArray.push(`${element.name} ${sortNumberPhone(element.phone)} ${element.email}`);
+		};
+		};   
+	});
+	return resultArray;
 }
 
 module.exports.find = find;
