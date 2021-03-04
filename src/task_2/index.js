@@ -19,6 +19,20 @@
 @returns {boolean} Результат обновления
  */
 function update(phoneBook, phone, name, email) {
+	let parsed = phone.split("-");
+	for (let i = 0; i < phoneBook.length; i++)
+	{
+		if (phoneBook[i].phone.split("-").join("") === parsed.join("") && 
+			typeof name != "undefined" && 
+			name.length != 0 &&
+			(parsed.length == 5 || parsed.length == 1))
+		{
+			phoneBook[i].name = name;
+			phoneBook[i].email = email;
+			return true;
+		}
+	}
+	return false;
 }
 
 module.exports.update = update;

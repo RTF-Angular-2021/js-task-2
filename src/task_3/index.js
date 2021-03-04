@@ -18,7 +18,44 @@
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
+
+String.prototype.splice = function(idx, rem, str) {
+    return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+};
+
 function find(phoneBook, query) {
+	if (query == '*')
+	{
+		let result = [];
+		phoneBook.forEach(element => {
+			let parsed = element.phone.split("-").join("");
+			parsed = parsed.splice(2,0,"(").splice(6,0,")");
+			parsed = parsed.splice(2,0," ").splice(8,0," ");
+			parsed = parsed.splice(12,0,"-").splice(15,0,"-");
+			
+			let info = `${element.name} ${parsed}`;
+			if (typeof element.email != 'undefined') info += ` ${element.email}`;
+			result.push(info);
+		});
+		return result.sort();
+	}
+
+	let result = [];
+	phoneBook.forEach(element => {
+		let parsed = element.phone.split("-").join("");
+			parsed = parsed.splice(2,0,"(");
+			parsed = parsed.splice(6,0,")");
+			parsed = parsed.splice(2,0," ");
+			parsed = parsed.splice(8,0," ");
+			parsed = parsed.splice(12,0,"-");
+			parsed = parsed.splice(15,0,"-");
+			
+			let info = `${element.name} ${parsed}`;
+			if (typeof element.email != 'undefined') info += ` ${element.email}`;
+		if (info.includes(query))
+			result.push(info);
+	});
+	return result.sort();
 }
 
 module.exports.find = find;
