@@ -1,25 +1,20 @@
-/** Задача 1 - Функция add
-Требуется написать функцию add, которая
-принимает: 
-	1) Текущее состояние телефонной книги
-	2) Номер телефон
-	3) Имя
-	4) Электронную почту,
-требуется:
-в текущее состояние телефонной книги добавить новый контакт по правилам
-	1) Телефоны принимаются только в форматах +7-999-111-22-33 или +79991112233
-	2) Не добавляется уже существующая запись
-	3) Не добавляется запись без имени
-возвращает:
-	true - если добавление прошло успешно
-	false - если запись не создалась или не добавилась в книгу
-@param {Array<{ phone: string, name: string, email?: string }>} phoneBook - Текущее состояние телефонной книги
-@param {string} phone Номер телефона
-@param {string} name Имя
-@param {string} email Электронная почта
-@returns {boolean} Результат добавления
- */
 function add(phoneBook, phone, name, email) {
+	let firstPattern = /^\+7-\d\d\d-\d\d\d-\d\d-\d\d$/;
+	let secondPattern = /^\+7\d\d\d\d\d\d\d\d\d\d$/;
+	let check = false;
+	if (firstPattern.test(phone) || secondPattern.test(phone))
+	{
+		let number = phone.match(/\d/g).join('');
+		for (let i = 0; i < phoneBook.length; i++) {
+			let currentNumber = phoneBook[i].phone.match(/\d/g).join('');
+			if (name === '' || name === undefined || phoneBook[i].name === name || number === currentNumber) 
+				check = true;
+		}
+		if (check) return false;
+		let obj = {name : name, phone : phone, email : email };
+		phoneBook.push(obj);
+		return true;
+	}
+	return false;
 }
-
 module.exports.add = add;
