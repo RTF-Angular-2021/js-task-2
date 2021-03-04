@@ -23,7 +23,7 @@ function find(phoneBook, query) {
 	  return
 	};
 	if(query === "*"){
-	  return showAll;
+	  return showAll(phoneBook);
 	};
 	if(/\d/.test(query)){
 	  return showByNumber(phoneBook, query);
