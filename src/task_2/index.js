@@ -32,11 +32,10 @@ function update(phoneBook, phone, name, email) {
 		if(element.phone === phone){
 			element.name = name;
 			element.email = email;
-			return true;
 		}
 	});
 
-	return false;
+	return true;
 }
 
 module.exports.update = update;
