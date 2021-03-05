@@ -24,41 +24,41 @@ function find(phoneBook, query)
 	let secondBufer;
 	let array;
 
-	if (query ==='')
+	if (!query)
 		return query;
 
-    for (const check of phoneBook)
+    for (let item of phoneBook)
 	{
 		if (query === '*')			
 		{
-        	secondBufer = check.phone.replace(/\D/g,'');
+        	secondBufer = item.phone.replace(/\D/g,'');
         	array = secondBufer.split('');
-        	check.phone =`+${array[0]} (${array[1]+array[2]+array[3]}) ${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
-        	if (!check.email)
+        	item.phone =`+${array[0]} (${array[1]+array[2]+array[3]}) ${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
+        	if (item.email)
 			{
-				result.push(`${check.name} ${check.phone} ${check.email}`);
+				result.push(`${item.name} ${item.phone} ${item.email}`);
 			}
 			else
 			{
-				result.push(`${check.name} ${check.phone}`);
+				result.push(`${item.name} ${item.phone}`);
 			}
     	}
 		else
 		{ 
-    		secondBufer = check.phone.replace(/\D/g,'');
+    		secondBufer = item.phone.replace(/\D/g,'');
     		array = secondBufer.split('');
     		firstBufer = array.join('');
     		secondBufer = `+${array[0]}-${array[1]+array[2]+array[3]}-${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
-    		if (firstBufer.includes(query)||secondBufer.includes(query)||(check.email !== undefined && check.email.includes(query))||check.name.includes(query))          
+    		if (firstBufer.includes(query)||secondBufer.includes(query)||(item.email !== undefined && item.email.includes(query))||item.name.includes(query))          
     		{
-        		check.phone =`+${array[0]} (${array[1]+array[2]+array[3]}) ${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
-        		if (check.email !== undefined)
+        		item.phone =`+${array[0]} (${array[1]+array[2]+array[3]}) ${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`;
+        		if (item.email)
 				{
-					result.push(`${check.name} ${check.phone} ${check.email}`);
+					result.push(`${item.name} ${item.phone} ${item.email}`);
 				}
 				else
 				{
-					result.push(`${check.name} ${check.phone}`);
+					result.push(`${item.name} ${item.phone}`);
 				}
     		}	
 		}

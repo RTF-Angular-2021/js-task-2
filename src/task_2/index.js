@@ -21,9 +21,9 @@
 let {isCellNumber} = require('../../src/task_1/index');
 
 function update(phoneBook, phone, name, email) {
-	if (!name){
+	if (name){
 		if (isCellNumber(phone)){
-			phone = phone.match(/\d/g).join('');
+			phone = phone.split('-').join('');
 			
 			for (let item of phoneBook){
 				if (item.phone === phone){
