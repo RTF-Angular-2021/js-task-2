@@ -19,7 +19,30 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат добавления
  */
-function add(phoneBook, phone, name, email) {
+function add(phoneBook, phone, name, email){
+	const correctContact2 = correctContact(phone);
+	if (!name || correctContact2 === null){
+		return false;
+	}
+
+	for (let item of phoneBook){
+		if (item.phone === correctContact2 && item !== undefined){
+			return false;
+		}
+	}
+	phoneBook.push({ phone: correctContact2, name, email });
+	return true;
+}
+function correctContact(phone){
+	if (phone.match(/\+\d{11}/) !== null){
+		return phone;
+	} 
+	else if (phone.match(/\+\d-\d{3}-\d{3}-\d{2}-\d{2}/) !== null){
+		return phone.replace(/-/g, '');
+	} 
+	else{
+		return null;
+	}
 }
 
 module.exports.add = add;

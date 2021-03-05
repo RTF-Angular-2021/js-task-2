@@ -13,6 +13,28 @@
 @returns {number} Количество удаленных записей
  */
 function findAndRemove(phoneBook, query) {
+	let deletedPhones = 0;
+	if (query === '*') {
+		for (let i in phoneBook) {
+			delete phoneBook[i];
+			deletedPhones++;
+		}
+		return deletedPhones;
+	}
+	for (let i in phoneBook) {
+		if (phoneBook[i] !== undefined) {
+			if (phoneBook[i].email !== undefined && phoneBook[i].email.includes(query)) {
+				delete phoneBook[i];
+				deletedPhones++;
+			}
+			if (phoneBook[i].name.includes(query) || phoneBook[i].phone.includes(query.replace(/-/g, ''))) {
+				delete phoneBook[i];
+				deletedPhones++;
+				continue;
+			}
+		}
+	}
+	return deletedPhones;
 }
 
 module.exports.findAndRemove = findAndRemove;
