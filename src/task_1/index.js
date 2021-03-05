@@ -39,12 +39,5 @@ function isCellNumber(phone){
 	return dashRe.test(phone) || noDashRe.test(phone);
 }
 
-let phoneBook = []
-add(phoneBook, '+78005553535', 'Сергей', 'sergey@mail.ru')
-add(phoneBook, '+7-800-333-55-55', 'Антон', 'anton@mail.ru')
-add(phoneBook, '+78005553535', 'Сергей', 'sergey@mail.ru')
-add(phoneBook, '+7-800-555-35-35', 'Андрей', 'andrey@mail.ru')
-add(phoneBook, '+7-800-555-35-35', 'Андрей', 'andrey@mail.ru')
-
 module.exports.add = add;
 module.exports.isCellNumber = isCellNumber;
