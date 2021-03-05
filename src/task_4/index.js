@@ -12,30 +12,30 @@
 @param {string} query Строка для поиска
 @returns {number} Количество удаленных записей
  */
-let { find } = require('../../src/task_3/index');
+let { find } = require('../task_3/index');
 
-function findAndRemove(phoneBook, query) 
+function findAndRemove(phoneBook, query, counter=0) 
 {
 	let firstBufer;
 	let secondBufer;
 	let array;
-	let counter = 0;
+
 	if (query == '*')
 	{
-		counter = find(phoneBook, query).length;
-		delete(phoneBook[{}]);
+		counter = find(phoneBook, query).filter(x => x).length;
+		delete(phoneBook[{}]);		
 	}
 	else
 	{
-		for(const check of phoneBook)
+		for(let item of phoneBook)
 		{
-			secondBufer = check.phone.replace(/\D/g,'');
+			secondBufer = item.phone.replace(/\D/g,'');
     		array = secondBufer.split('');
     		firstBufer = array.join('');
     		secondBufer = `+${array[0]}-${array[1]+array[2]+array[3]}-${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`; //Sorry. Велосипеды в час ночи. В следущий раз учту свое время.
-			if (firstBufer.includes(query)||secondBufer.includes(query)||check.name.includes(query)||(check.email !== undefined && check.email.includes(query)))
+			if (firstBufer.includes(query)||secondBufer.includes(query)||item.name.includes(query)||(item.email &&item.email.includes(query)))
 			{
-				delete phoneBook[check];
+				phoneBook = phoneBook.filter(q => q !== item);
 				counter++;
 			}
 		}
@@ -44,3 +44,4 @@ function findAndRemove(phoneBook, query)
 	return counter;
 }
 
+module.exports.findAndRemove = findAndRemove;
