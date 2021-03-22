@@ -24,7 +24,8 @@ String.prototype.splice = function(idx, rem, str) {
 };
 
 function find(phoneBook, query) {
-	if (query == '*')
+	const all = '*';
+	if (query === all)
 	{
 		let result = [];
 		phoneBook.forEach(element => {
@@ -51,7 +52,7 @@ function find(phoneBook, query) {
 			parsed = parsed.splice(15,0,"-");
 			
 			let info = `${element.name} ${parsed}`;
-			if (typeof element.email != 'undefined') info += ` ${element.email}`;
+			if (element.email) info += ` ${element.email}`;
 		if (info.includes(query))
 			result.push(info);
 	});

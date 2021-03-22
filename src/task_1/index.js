@@ -23,15 +23,15 @@
 function add(phoneBook, phone, name, email) {
 	let newPhone = phone.split("-").join("");
 	let element = {
-		phone: phone,
-		name: name,
-		email: email
+		phone,
+		name,
+		email
 	};
 	for (let i = 0; i < phoneBook.length; i++)
 	{
 		if (phoneBook[i].phone.split("-").join("") == newPhone) return false;
 	}
-	if (typeof name != "undefined" && name.length != 0 && newPhone.length == 12)
+	if (name && newPhone.length == 12)
 	{
 		phoneBook.push(element);
 		return true;

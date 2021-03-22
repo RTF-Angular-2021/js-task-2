@@ -23,8 +23,7 @@ function update(phoneBook, phone, name, email) {
 	for (let i = 0; i < phoneBook.length; i++)
 	{
 		if (phoneBook[i].phone.split("-").join("") === parsed.join("") && 
-			typeof name != "undefined" && 
-			name.length != 0 &&
+			name &&
 			(parsed.length == 5 || parsed.length == 1))
 		{
 			phoneBook[i].name = name;
