@@ -12,32 +12,26 @@
 @returns {number} Количество добавленных и обновленных записей
  */
 let { add } = require('../../src/task_1/index');
-let { find } = require('../../src/task_3/index');
 let { update } = require('../../src/task_2/index');
+let { isCellNumber } = require('../task_1/index');
 
 function importFromCsv(phoneBook, csv) 
 {
 	let counter = 0;
+	let ctxArray = csv.split('\n');
 
-	const table = csv.split('\n');
-	for (let line of table)
-	{
-		line = line.split(';');
-		if (find(phoneBook,line[0],line[1],line[2]).length > 0)
-		{
-			if(update(phoneBook,line[0],line[1],line[2]))
-			{
-				counter++;
-			}
-		}
-		else
-		{
-			if(add(phoneBook,line[0],line[1],line[2]))
-			{
+	for (const context of ctxArray){
+		const args = context.split(';');
+		if (args.length === 3 && isCellNumber(args[0])){
+			const phone = args[0];
+			const name = args[1];
+			const email = args.length === 3? args[2] : '';
+			if (add(phoneBook, phone, name, email) || update(phoneBook, phone, name, email)){
 				counter++;
 			}
 		}
 	}
+
 	return counter;
 }
 

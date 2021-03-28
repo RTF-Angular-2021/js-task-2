@@ -14,34 +14,21 @@
  */
 let { find } = require('../task_3/index');
 
-function findAndRemove(phoneBook, query, counter=0) 
-{
-	let firstBufer;
-	let secondBufer;
-	let array;
-
-	if (query == '*')
-	{
-		counter = find(phoneBook, query).filter(x => x).length;
-		delete(phoneBook[{}]);		
-	}
-	else
-	{
-		for(let item of phoneBook)
-		{
-			secondBufer = item.phone.replace(/\D/g,'');
-    		array = secondBufer.split('');
-    		firstBufer = array.join('');
-    		secondBufer = `+${array[0]}-${array[1]+array[2]+array[3]}-${array[4]+array[5]+array[6]}-${array[7]+array[8]}-${array[9]+array[10]}`; //Sorry. Велосипеды в час ночи. В следущий раз учту свое время.
-			if (firstBufer.includes(query)||secondBufer.includes(query)||item.name.includes(query)||(item.email &&item.email.includes(query)))
-			{
-				phoneBook = phoneBook.filter(q => q !== item);
-				counter++;
+function findAndRemove(phoneBook, query) {
+	let deleteNum = 0;
+	if (query === "*"){
+		deleteNum = phoneBook.length;
+		phoneBook.splice(0, deleteNum);
+	} else {
+		for (let i = 0; i < phoneBook.length; i++){const entry = phoneBook[i];
+			if (find([entry], query).length > 0){
+				phoneBook.splice(i, 1);
+				deleteNum++;
+				i--;
 			}
 		}
 	}
-
-	return counter;
+	return deleteNum;
 }
 
 module.exports.findAndRemove = findAndRemove;
