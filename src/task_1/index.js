@@ -1,25 +1,38 @@
-/** Задача 1 - Функция add
-Требуется написать функцию add, которая
-принимает: 
-	1) Текущее состояние телефонной книги
-	2) Номер телефон
-	3) Имя
-	4) Электронную почту,
-требуется:
-в текущее состояние телефонной книги добавить новый контакт по правилам
-	1) Телефоны принимаются только в форматах +7-999-111-22-33 или +79991112233
-	2) Не добавляется уже существующая запись
-	3) Не добавляется запись без имени
-возвращает:
-	true - если добавление прошло успешно
-	false - если запись не создалась или не добавилась в книгу
-@param {Array<{ phone: string, name: string, email?: string }>} phoneBook - Текущее состояние телефонной книги
-@param {string} phone Номер телефона
-@param {string} name Имя
-@param {string} email Электронная почта
-@returns {boolean} Результат добавления
- */
+function toFormat(phone) {
+	return phone.match(/\d/g).join('');
+}
+
+function isEmpty(name) {
+	if (name !== null && typeof name !== "undefined")
+		name = name.trim();
+	return !Boolean(name);
+}
+
+function contains(objectsArray, property, value) {
+	for (let obj of objectsArray)
+		if (toFormat(obj[property]) === toFormat(value))
+			return true;
+	return false;
+}
+
+function templateCheck(phone) {
+	let firstTemplate = /^\+7-\d\d\d-\d\d\d-\d\d-\d\d$/;
+	let secondTemplate = /^\+7\d\d\d\d\d\d\d\d\d\d$/;
+	return firstTemplate.test(phone) || secondTemplate.test(phone);
+}
+
 function add(phoneBook, phone, name, email) {
+	if (isEmpty(name) || contains(phoneBook, "phone", phone) || !templateCheck(phone))
+		return false;
+	phoneBook.push({
+		name : name,
+		phone : phone,
+		email : email
+	})
+	return true;
 }
 
 module.exports.add = add;
+module.exports.toFormat = toFormat;
+module.exports.isEmpty = isEmpty;
+module.exports.templateCheck = templateCheck;

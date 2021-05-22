@@ -1,24 +1,21 @@
-/** Задача 2 - Функция update
-Требуется написать функцию update, которая
-принимает: 
-	1) Текущее состояние телефонной книги
-	2) Номер телефон
-	3) Имя
-	4) Электронную почту,
-требуется:
-в текущем состояние телефонной книги обновить контакт по номеру телефона
-	1) Электронную почту можно стереть, а имя нет
-	2) Правила валидации полей такое же, как и при добавлении
-возвращает:
-	true - если обновление прошло успешно
-	false - если запись не обновилась
-@param {Array<{ phone: string, name: string, email?: string }>} phoneBook - Текущее состояние телефонной книги
-@param {string} phone Номер телефона
-@param {string} name Имя
-@param {string} email Электронная почта
-@returns {boolean} Результат обновления
- */
+const {templateCheck} = require("../task_1");
+const {toFormat} = require("../task_1");
+const {isEmpty} = require("../task_1");
+
+function find(objectsArray, property, value) {
+	for (let obj of objectsArray)
+		if (toFormat(obj[property]) === toFormat(value))
+			return obj;
+	return null;
+}
+
 function update(phoneBook, phone, name, email) {
+	let item = find(phoneBook, "phone", phone)
+	if (isEmpty(name) || item === null || typeof item === "undefined" || !templateCheck(phone))
+		return false;
+	item.name = name;
+	item.email = email;
+	return true;
 }
 
 module.exports.update = update;
