@@ -1,18 +1,39 @@
-/** Задача 2 - Функция findAndRemove
-Требуется написать функцию findAndRemove, которая
-принимает: 
-	1) Текущее состояние телефонной книги
-	2) Запрос для поиска
-требуется:
-в текущем состоянии телефонной книги найти и удалить все записи, которые удовлетворяют требованиям
-	1) См. find из task_3
-возвращает:
-	Число удаленных записей
-@param {Array<{ phone: string, name: string, email?: string }>} phoneBook - Текущее состояние телефонной книги
-@param {string} query Строка для поиска
-@returns {number} Количество удаленных записей
- */
+const {isEmpty} = require("../task_1");
+const {toFormat} = require("../task_1");
+
+function remove(arr, indexes) {
+	let count = 0;
+	indexes = indexes.sort((a, b) => a < b ? 1 : -1);
+	for (let index of indexes) {
+		arr.splice(index, 1);
+		count++;
+	}
+	return count;
+}
+
+function contains(item1, item2) {
+	let result = false;
+	if (/[0-9]/.test(item1) && /[0-9]/.test(item2))
+		if (toFormat(item1).indexOf(toFormat(item2)) !== -1)
+			result = true;
+	return result || item1.indexOf(item2) !== -1;
+}
+
 function findAndRemove(phoneBook, query) {
+	let indexes = [];
+	if (isEmpty(query)) return 0;
+	if (query === "*") {
+		let count = phoneBook.length;
+		phoneBook = [];
+		return count;
+	};
+	for (let i = 0; i < phoneBook.length; i++)
+		for (let prop in phoneBook[i])
+			if (typeof phoneBook[i][prop] !== "undefined" && contains(phoneBook[i][prop], query)) {
+				indexes.push(i);
+				break;
+			}
+	return remove(phoneBook, indexes);
 }
 
 module.exports.findAndRemove = findAndRemove;
