@@ -18,7 +18,30 @@
 @param {string} email Электронная почта
 @returns {boolean} Результат обновления
  */
+const regexPhoneNumber = /^\+7[\- ](\d{3}[\- ])(\d{3}[\- ])(\d{2}[\- ])(\d{2})$/im;
+const regexp = /^\+7[0-9]{10}$/im;
+
 function update(phoneBook, phone, name, email) {
+  if (regexPhone(phone) && name) {
+    let result = phoneBook.find(item => item.phone.replace(/[^\d]/g, '') == phone.replace(/[^\d]/g, ''));
+    if (result) {
+      if (result.email !== email || result.name !== name) {
+        result.email = email;
+        result.name = name;
+        return true;
+      }
+    } else if (result == undefined) {
+      return false
+    }
+  } else {
+    return false;
+  }
+}
+
+function regexPhone(str) {
+  if (str.match(regexp) || str.match(regexPhoneNumber)) {
+    return true;
+  }
 }
 
 module.exports.update = update;

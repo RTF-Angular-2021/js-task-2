@@ -18,7 +18,56 @@
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
+
 function find(phoneBook, query) {
+	if (query !== "*" && query !== "") {
+		let regexpQuery = new RegExp('(' + query.replace(/[\-+]/g, '') + '[\w\n]*)', 'i');
+		return findAllMatchedObjectInBook(phoneBook, regexpQuery).map((item) => {
+			return createStrFromObj(item);
+		})
+	} else if (query === "") {
+		false;
+	} else {
+		return phoneBook.map((item) => {
+			return createStrFromObj(item);
+		})
+	}
+}
+
+function modifyPhone(phone) {
+	phone = phone.replace(/-/g, '')
+	let lenPhone = phone.length;
+	let tt = phone.split('');
+	if (lenPhone == 12) {
+		tt.splice(2, "", " (");
+		tt.splice(6, "", ") ");
+		tt.splice(10, "", "-");
+		tt.splice(13, "", "-");
+	}
+	return tt.join('')
+}
+
+const findAllMatchedObjectInBook = (book, reg) => {
+	return book.filter(function (item) {
+		for (let key in item) {
+			let res = item[key].replace(/-/g, '');
+			if (reg.test(res)) {
+				return item
+			}
+		}
+	})
+}
+
+const createStrFromObj = (i) => {
+	let str = "";
+	for (let key in i) {
+		if (key == "phone") {
+			str += modifyPhone(i[key]) + ' ';
+		} else {
+			str += i[key] + ' ';
+		}
+	}
+	return str.replace(/\s+$/, '');
 }
 
 module.exports.find = find;
