@@ -19,6 +19,53 @@
 @returns {boolean} Результат обновления
  */
 function update(phoneBook, phone, name, email) {
+	const typeOfPhone_1 = new RegExp("^\\+7\\-\\d{3}\\-\\d{3}\\-\\d{2}\\-\\d{2}$");
+	const typeOfPhone_2 = new RegExp("^\\+7\\d{10}$");
+	const typeOfEmail   = new RegExp("^\\w+@\\w+\\.\\w+$");
+
+	let item = {}
+
+	if (phone.match(typeOfPhone_1)) {
+		item.phone = phone;
+	}
+	else if(phone.match(typeOfPhone_2)) {
+		item.phone = phone;
+	}
+	else {
+		return false
+	}
+
+	if (typeof name === "string" && name.length > 1) {
+		item.name = name;
+	} else if(!name) {
+		return false
+	}
+	else {
+		return false
+	}
+
+	if (!email) {
+		item.email = email;
+	}
+	else if (email.match(typeOfEmail)) {
+		item.email = email;
+	}
+	else {
+		return false
+	}
+
+	for (let key in phoneBook) {
+		if (phoneBook[key].phone === phone || phoneBook[key].phone.split('-').join('')
+			=== phone.split('-').join('')) {
+			phoneBook[key].name = name;
+			phoneBook[key].email = email;
+			return true
+		}
+	}
+	console.log(phoneBook);
+	return false
 }
+
+const phoneBook = [];
 
 module.exports.update = update;
