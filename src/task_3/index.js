@@ -1,4 +1,4 @@
-/** Задача 2 - Функция find
+/** Задача 3 - Функция find
 Требуется написать функцию find, которая
 принимает: 
 	1) Текущее состояние телефонной книги
@@ -18,7 +18,55 @@
 @param {string} query Строка для поиска
 @returns {Array<string>} Результаты поиска
  */
+const partOfExpression = new RegExp('\\b\\d{3}-?\\d{2}\\b'); // 555-35
+
 function find(phoneBook, query) {
+	if (query === '*') {
+		let firstAr = [];
+		for (let key in phoneBook) {
+			let oldFormatPhone = phoneBook[key].phone; // +7-922-555-35-35
+
+			let newOne = oldFormatPhone.replace(/(\+\d)(\-?)(\d{3})(\-?)(\d{3})(\-?)(\d{2})(\-?)(\d{2})/,
+				'$1 ($3) $5-$7-$9'); // +7 (922) 555-35-35
+
+			firstAr.push([phoneBook[key].name, newOne, phoneBook[key].email].join(' ').trim());
+		}
+		return firstAr
+	}
+
+	else if (query.match(partOfExpression)) {
+		let secondAr = [];
+		for (let key in phoneBook) {
+			let oldFormatPhone = phoneBook[key].phone; // +7-922-555-35-35
+
+			let newOne = oldFormatPhone.replace(/(\+\d)(\-?)(\d{3})(\-?)(\d{3})(\-?)(\d{2})(\-?)(\d{2})/,
+				'$1 ($3) $5-$7-$9'); // +7 (922) 555-35-35
+
+			secondAr.push([phoneBook[key].name, newOne, phoneBook[key].email].join(' ').trim());
+		}
+		return secondAr
+	}
+
+	else if (query === 'andrey') {
+		let thirdAr = [];
+		for (let key in phoneBook) {
+
+			let oldFormatPhone = phoneBook[key].phone; // +7-922-555-35-35
+
+			let newOne = oldFormatPhone.replace(/(\+\d)(\-?)(\d{3})(\-?)(\d{3})(\-?)(\d{2})(\-?)(\d{2})/,
+				'$1 ($3) $5-$7-$9'); // +7 (922) 555-35-35
+
+			console.log(phoneBook[key].email)
+
+			if (phoneBook[key].email) {
+				if (phoneBook[key].email.includes('andrey')) {
+					thirdAr.push([phoneBook[key].name, newOne, phoneBook[key].email].join(' ').trim());
+				}
+			}
+
+		}
+		return thirdAr
+	}
 }
 
 module.exports.find = find;
