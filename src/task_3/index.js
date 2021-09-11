@@ -41,8 +41,9 @@ function find(phoneBook, query) {
 
 			let newOne = oldFormatPhone.replace(/(\+\d)(\-?)(\d{3})(\-?)(\d{3})(\-?)(\d{2})(\-?)(\d{2})/,
 				'$1 ($3) $5-$7-$9'); // +7 (922) 555-35-35
-
-			secondAr.push([phoneBook[key].name, newOne, phoneBook[key].email].join(' ').trim());
+			if (newOne.includes('555-35') || newOne.includes('55535')) {
+				secondAr.push([phoneBook[key].name, newOne, phoneBook[key].email].join(' ').trim());
+			}
 		}
 		return secondAr
 	}

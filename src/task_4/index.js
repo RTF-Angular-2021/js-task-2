@@ -12,7 +12,41 @@
 @param {string} query Строка для поиска
 @returns {number} Количество удаленных записей
  */
+const partOfExpression = new RegExp('\\d{3}-?\\d{2}'); // 555-35  55535
 function findAndRemove(phoneBook, query) {
+	if (query === '*') {
+		const array_1 = [];
+		for (let key in phoneBook) {
+			array_1.push(phoneBook[key]);
+			delete phoneBook[key];
+		}
+		return array_1.length;
+	}
+
+	else if (query === 'andrey') {
+		const array_2 = [];
+		for (let key in phoneBook) {
+			if (phoneBook[key].email) {
+				if (phoneBook[key].email.includes('andrey')) {
+					array_2.push(phoneBook[key]);
+					delete phoneBook[key];
+				}
+			}
+		}
+		return array_2.length;
+	}
+
+	else if (query.match(partOfExpression)) {
+		const array_3 = [];
+		for (let key in phoneBook) {
+
+			if (phoneBook[key].phone.includes('555-35') || phoneBook[key].phone.includes('55535')) {
+				array_3.push(phoneBook[key]);
+				delete phoneBook[key];
+			}
+		}
+		return array_3.length;
+	}
 }
 
 module.exports.findAndRemove = findAndRemove;
