@@ -1,6 +1,6 @@
 /** Задача 2 - Функция findAndRemove
 Требуется написать функцию findAndRemove, которая
-принимает: 
+принимает:
 	1) Текущее состояние телефонной книги
 	2) Запрос для поиска
 требуется:
@@ -12,7 +12,16 @@
 @param {string} query Строка для поиска
 @returns {number} Количество удаленных записей
  */
+const {find} = require("../task_3");
+
+const partOfExpression = new RegExp('\\d{3}-?\\d{2}'); // 555-35  55535
+
 function findAndRemove(phoneBook, query) {
+	let del = find(phoneBook, query);
+	del.forEach(item => {
+		delete phoneBook[item]
+	})
+	return del.length;
 }
 
 module.exports.findAndRemove = findAndRemove;
