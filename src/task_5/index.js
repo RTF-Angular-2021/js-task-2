@@ -13,8 +13,8 @@
 @returns {number} Количество добавленных и обновленных записей
  */
 
-const typeOfPhone_1 = new RegExp("^\\+7\\-\\d{3}\\-\\d{3}\\-\\d{2}\\-\\d{2}$");
-const typeOfPhone_2 = new RegExp("^\\+7\\d{10}$");
+const typeOfPhone1 = new RegExp("^\\+7\\-\\d{3}\\-\\d{3}\\-\\d{2}\\-\\d{2}$");
+const typeOfPhone2 = new RegExp("^\\+7\\d{10}$");
 const typeOfEmail   = new RegExp("^\\w+@\\w+\\.\\w+$");
 const typeOfEmail2   = new RegExp("\\w+\\@\\w+\\.\\w+");
 const partOfExpression = new RegExp('\\d{3}-?\\d{2}'); // 555-35  55535
@@ -31,10 +31,7 @@ function importFromCsv(phoneBook, csv) {
 		let objItem = {}
 		splitAr.forEach(item => {
 
-			if (item.match(typeOfPhone_1)) {
-				objItem.phone = item;
-			}
-			else if (item.match(typeOfPhone_2)) {
+			if (typeOfPhone1.test(item) || typeOfPhone2.test(item)) {
 				objItem.phone = item;
 			}
 
@@ -42,14 +39,13 @@ function importFromCsv(phoneBook, csv) {
 				objItem.name = item;
 			}
 
-			if (item.match(typeOfEmail2)) {
+			if (typeOfEmail2.test(item)) {
 				objItem.email = item;
 			}
 		})
 
 		finalArr.push(objItem)
 	});
-	console.log(finalArr);
 
 	finalArr.forEach(item=> {
 		if (item.phone && item.name && item.email) {

@@ -20,53 +20,51 @@
  */
 const partOfExpression = new RegExp('\\b\\d{3}-?\\d{2}\\b'); // 555-35
 
+function fixFormat(oldFormatPhone) {
+	let newOne = oldFormatPhone.replace(/(\+\d)(\-?)(\d{3})(\-?)(\d{3})(\-?)(\d{2})(\-?)(\d{2})/,
+		'$1 ($3) $5-$7-$9'); // +7 (922) 555-35-35
+	return newOne
+}
+
+function sortName (a, b) {
+	if (a.name > b.name) {
+		return 1;
+	}
+	if (a.name < b.name) {
+		return -1;
+	}
+	// a должно быть равным b
+	return 0;
+}
+
 function find(phoneBook, query) {
+	const arr = [];
 	if (query === '*') {
-		let firstAr = [];
 		for (let key in phoneBook) {
-			let oldFormatPhone = phoneBook[key].phone; // +7-922-555-35-35
-
-			let newOne = oldFormatPhone.replace(/(\+\d)(\-?)(\d{3})(\-?)(\d{3})(\-?)(\d{2})(\-?)(\d{2})/,
-				'$1 ($3) $5-$7-$9'); // +7 (922) 555-35-35
-
-			firstAr.push([phoneBook[key].name, newOne, phoneBook[key].email].join(' ').trim());
+			arr.push([phoneBook[key].name, fixFormat(phoneBook[key].phone), phoneBook[key].email].join(' ').trim());
 		}
-		return firstAr
+		return arr.sort(sortName);
 	}
 
 	else if (query.match(partOfExpression)) {
-		let secondAr = [];
 		for (let key in phoneBook) {
-			let oldFormatPhone = phoneBook[key].phone; // +7-922-555-35-35
-
-			let newOne = oldFormatPhone.replace(/(\+\d)(\-?)(\d{3})(\-?)(\d{3})(\-?)(\d{2})(\-?)(\d{2})/,
-				'$1 ($3) $5-$7-$9'); // +7 (922) 555-35-35
-			if (newOne.includes('555-35') || newOne.includes('55535')) {
-				secondAr.push([phoneBook[key].name, newOne, phoneBook[key].email].join(' ').trim());
+			if (phoneBook[key].phone.includes('555-35') || phoneBook[key].phone.includes('55535')) {
+				arr.push([phoneBook[key].name, fixFormat(phoneBook[key].phone), phoneBook[key].email].join(' ').trim());
 			}
 		}
-		return secondAr
+		return arr.sort(sortName);
 	}
 
-	else if (query === 'andrey') {
-		let thirdAr = [];
+	else if (query.match(/\w+\D/)) {
 		for (let key in phoneBook) {
-
-			let oldFormatPhone = phoneBook[key].phone; // +7-922-555-35-35
-
-			let newOne = oldFormatPhone.replace(/(\+\d)(\-?)(\d{3})(\-?)(\d{3})(\-?)(\d{2})(\-?)(\d{2})/,
-				'$1 ($3) $5-$7-$9'); // +7 (922) 555-35-35
-
-			console.log(phoneBook[key].email)
-
 			if (phoneBook[key].email) {
-				if (phoneBook[key].email.includes('andrey')) {
-					thirdAr.push([phoneBook[key].name, newOne, phoneBook[key].email].join(' ').trim());
+				if (phoneBook[key].email.match(/\w+\D/)) {
+					arr.push([phoneBook[key].name, fixFormat(phoneBook[key].phone), phoneBook[key].email].join(' ').trim());
 				}
 			}
-
 		}
-		return thirdAr
+
+		return arr.sort(sortName);
 	}
 }
 
