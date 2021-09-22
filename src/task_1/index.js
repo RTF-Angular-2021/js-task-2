@@ -1,3 +1,14 @@
+class Contact {
+	constructor(phone, name, email = "") {
+		this.phone = phone;
+		this.name = name;
+		this.email = email;
+	}
+}
+
+const phoneRegExpHyphen = /^\+\d-(\d{3}-){2}(\d{2})-(\d{2})$/;
+const phoneRegExpStraight = /^\+\d{11}/;
+
 /** Задача 1 - Функция add
 Требуется написать функцию add, которая
 принимает: 
@@ -20,6 +31,23 @@
 @returns {boolean} Результат добавления
  */
 function add(phoneBook, phone, name, email) {
+	if (name.length == 0) {
+		return false;
+	}
+
+	if (!phoneRegExpHyphen.test(phone) &&
+		!phoneRegExpStraight.test(phone)) {
+		return false;
+	}
+
+	for (const cont of phoneBook) {
+		if (phone == cont.phone) {
+			return false;
+		}
+	}
+
+	phoneBook.push(new Contact(phone, name, email));
+	return true;
 }
 
 module.exports.add = add;
