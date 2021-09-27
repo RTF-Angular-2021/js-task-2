@@ -1,3 +1,5 @@
+const { Contact } = require('../../src/task_1/index');
+
 /** Задача 2 - Функция update
 Требуется написать функцию update, которая
 принимает: 
@@ -19,6 +21,16 @@
 @returns {boolean} Результат обновления
  */
 function update(phoneBook, phone, name, email) {
+	if(!Contact.isNameValid(name) || !Contact.isPhoneValid(phone)){
+		return false;
+	}
+	let updated = phoneBook.find(contact => contact.phone == Contact.getStrippedPhone(phone));
+	if(typeof updated === 'undefined'){
+		return false;
+	}
+	updated.name = name;
+	updated.email = email;
+	return true;
 }
 
 module.exports.update = update;

@@ -1,3 +1,4 @@
+const { Contact } = require('../../src/task_1/index');
 /** Задача 2 - Функция find
 Требуется написать функцию find, которая
 принимает: 
@@ -19,6 +20,41 @@
 @returns {Array<string>} Результаты поиска
  */
 function find(phoneBook, query) {
+
+	if (typeof query != 'string' || query.length == 0) {
+		return [];
+	}
+
+	let result = [];
+	if (query == '*') {
+		for (const contact of phoneBook) {
+			result.push(contact.toString());
+		}
+	}
+	else {
+		for (const contact of phoneBook) {
+			if (contact.name.includes(query) ||
+				contact.email.includes(query)  ||
+				 	(
+					 	(tmp = Contact.getStrippedPhone(query)).length > 0 &&
+					  	contact.phone.includes(tmp)
+						)
+					){
+				result.push(contact.toString());
+			}
+		}
+	}
+
+	result.sort((a, b) => {
+		let nameA = a.split(' ')[0];
+		let nameB = b.split(' ')[0];
+		if (nameA == nameB) {
+			return 0;
+		}
+		return nameA > nameB ? 1 : -1;
+	});
+
+	return result;
 }
 
 module.exports.find = find;

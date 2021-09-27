@@ -1,3 +1,7 @@
+const { Contact } = require('../../src/task_1/index');
+const { add } = require('../../src/task_1/index');
+const { update } = require('../../src/task_2/index');
+const { find } = require('../../src/task_3/index');
 /** Задача 2 - Функция importFromCsv
 Требуется написать функцию importFromCsv, которая
 принимает: 
@@ -12,6 +16,18 @@
 @returns {number} Количество добавленных и обновленных записей
  */
 function importFromCsv(phoneBook, csv) {
+	let count = 0;
+	let lines = csv.split('\n');
+	for(const line of lines){
+		let pne = line.split(';');
+		if(add(phoneBook, pne[0], pne[1], pne[2])){
+			count = count + 1;
+		}
+		else if (update(phoneBook, pne[0], pne[1], pne[2])){
+			count = count + 1;
+		}
+	}
+	return count;
 }
 
 module.exports.importFromCsv = importFromCsv;

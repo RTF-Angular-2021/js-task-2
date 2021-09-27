@@ -1,3 +1,5 @@
+const { Contact } = require('../../src/task_1/index');
+const { find } = require('../../src/task_3/index');
 /** Задача 2 - Функция findAndRemove
 Требуется написать функцию findAndRemove, которая
 принимает: 
@@ -13,6 +15,17 @@
 @returns {number} Количество удаленных записей
  */
 function findAndRemove(phoneBook, query) {
+	let foundContacts = find(phoneBook, query);
+	let countRemoved = 0;
+	for(const contact of foundContacts){
+		let phone = Contact.getStrippedPhone(contact.split(' ').splice(1, 4).join(''));
+		let foundContactIndex = phoneBook.findIndex(cntc => cntc.phone === phone);
+		if(foundContactIndex != -1){
+			phoneBook.splice(foundContactIndex, 1);
+			countRemoved = countRemoved + 1;
+		}
+	}
+	return countRemoved;
 }
 
 module.exports.findAndRemove = findAndRemove;
